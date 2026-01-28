@@ -3,7 +3,7 @@ import Login from "./pages/Login";
 import { useState } from 'react';
 
 function App() {
-  const [FormData, setFormDate] = useState();
+  const [formData, setFormData] = useState();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -13,7 +13,6 @@ function App() {
       ...formData,
       [e.target.name]: e.target.value,
     })
-
     await fetch('http://localhost:3000/login', {
       method: 'POST',
       headers: {
