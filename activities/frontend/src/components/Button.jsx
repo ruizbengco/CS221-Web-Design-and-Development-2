@@ -3,7 +3,7 @@ import "./Button.css"
 const Button = ({children, loading, variant = "primary", ...props}) => {
     return (
         <Button className={`btn btn-${variant}`} 
-                disabled={loading}>
+                disabled={loading} {...props}>
                     {
                         loading ? (
                             <><span className="spinner">Loading...</span></>

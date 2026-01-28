@@ -5,6 +5,7 @@ const Card = ({title, children}) => {
         <div className="card-container">
             <div className="card">
                 {title && <h2 className="card-title">{title}</h2>}
+                {children}
             </div>
         </div>
     );
