@@ -4,24 +4,30 @@ const userSchema = new mongoose.Schema(
   {
     username: {
       type: String,
-      required: true
+      required: true,
     },
     email: {
       type: String,
       required: true,
-      unique: true
+      unique: true,
     },
     password: {
       type: String,
-      required: true
+      required: true,
     },
     role: {
       type: String,
       enum: ["User", "Moderator", "Admin"],
-      default: "User"
-    }
+      default: "User",
+    },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
+
+//Middleware
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next();
+  this.password = await bcrypt.hash(this.password, 10);
+});
 
 export default mongoose.model("User", userSchema);
