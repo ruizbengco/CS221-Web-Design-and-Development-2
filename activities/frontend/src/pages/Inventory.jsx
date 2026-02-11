@@ -3,7 +3,9 @@ import Card from "../components/Card.jsx";
 import Button from "../components/Button.jsx";
 import Input from "../components/Input.jsx";
 import Input from "../components/TextArea.jsx";
+import Input from "../components/TextArea.jsx";
 import "./Login.css"
+import { inventoryService } from '../services/inventoryService.js';
 
 export default function Inventory() {
     const [loading, setLoading] = useState();
@@ -23,7 +25,8 @@ export default function Inventory() {
 
     try {
       // function call to backend
-      await login(formData);
+      const response =await inventoryService.create(formData);
+      console.log(response);
       alert("Product Page.");
     } catch (error) {
       setErrors({ message: error.message });
