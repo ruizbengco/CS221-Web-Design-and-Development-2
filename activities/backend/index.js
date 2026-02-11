@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
+import productRoutes from "./routes/productRoutes.js";
 
 const app = express();
 const PORT = 3000;
@@ -11,12 +12,13 @@ dotenv.config();
 app.use(express.json());
 app.use(
   cors({
-    // demo purposes, * means any endpoint can access the backend and methods
+    // demo purposes, * means any endpoinmt can access the backend and methods
     origin: "*",
     methods: ["GET", "POST"],
   }),
 );
 app.use("/api/auth", authRoutes);
+app.use("/api/product", productRoutes)
 
 app.listen(PORT, () => {
   // GET -> fetch, name var name = "name"

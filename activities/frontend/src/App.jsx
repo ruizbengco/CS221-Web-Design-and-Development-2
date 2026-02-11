@@ -1,6 +1,8 @@
 import './App.css'
 import Login from "./pages/Login";
 import { useState } from 'react';
+import Inventory from "./pages/Inventory"
+import { AuthProvider } from './contexts/authContext';
 
 function App() {
   const [formData, setFormData] = useState();
