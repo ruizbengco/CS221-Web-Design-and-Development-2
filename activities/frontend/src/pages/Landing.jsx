@@ -1,19 +1,15 @@
 import React from "react";
-import Header from "../components/landing/Header.jsx";
+import Header from "../components/landing/Header";
 import Hero from "../components/landing/Hero";
-import MainContent from "../components/MainContent";
-import Footer from "../components/Footer";
+import Footer from "../components/landing/Footer";
+import Features from "../components/landing/Features";
 
 export default function Landing() {
   return (
     <div>
       <Header />
-      <Hero
-        title="Welcome to my App"
-        description="Your one-stop solution for managing your inventory efficiently"
-        buttonText="Get started"
-      />
-      <MainContent />
+      <Hero />
+      <Features />
       <Footer />
     </div>
   );

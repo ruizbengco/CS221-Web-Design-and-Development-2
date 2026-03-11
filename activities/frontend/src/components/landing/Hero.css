@@ -1,27 +1,130 @@
-.hero-container {
-  height: 80vh; /* Covers 80% of the viewport height */
+/* ── Hero Section ── */
+
+.hero {
+  background: linear-gradient(
+    135deg,
+    var(--primary-blue) 0%,
+
+    var(--secondary-green) 100%
+  );
+
+  min-height: 82vh;
+
   display: flex;
+
   align-items: center;
+
   justify-content: center;
-  background-size: cover;
-  background-position: center;
-  color: white;
+
+  padding: 5rem 2rem;
+
   text-align: center;
 }
-.hero-content h1 {
-  font-size: 3.5rem;
-  margin-bottom: 1rem;
+
+.hero-content {
+  max-width: 740px;
+
+  width: 100%;
 }
-.hero-content p {
-  font-size: 1.2rem;
-  margin-bottom: 2rem;
-}
-.hero-button {
-  padding: 12px 24px;
-  font-size: 1rem;
-  background-color: #007bff;
+
+.hero-title {
+  font-size: clamp(2.4rem, 6vw, 4rem);
+
+  font-weight: 800;
+
   color: white;
-  border: none;
-  border-radius: 5px;
+
+  margin: 0 0 1.25rem;
+
+  line-height: 1.1;
+
+  letter-spacing: -0.02em;
+}
+
+.hero-accent {
+  color: #d1fae5;
+}
+
+.hero-subtitle {
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+
+  color: rgba(255, 255, 255, 0.88);
+
+  margin: 0 auto 2.5rem;
+
+  line-height: 1.65;
+
+  max-width: 560px;
+}
+
+.hero-cta {
+  display: flex;
+
+  gap: 1rem;
+
+  justify-content: center;
+
+  flex-wrap: wrap;
+}
+
+/* ── CTA Buttons ── */
+
+.cta-btn {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 0.875rem 2rem;
+
+  border-radius: 8px;
+
+  font-size: 1rem;
+
+  font-weight: 600;
+
+  text-decoration: none;
+
+  transition: all 0.25s;
+
   cursor: pointer;
+}
+
+.cta-primary {
+  background-color: white;
+
+  color: var(--primary-blue);
+}
+
+.cta-primary:hover {
+  background-color: #f0f9ff;
+
+  color: var(--hover-blue);
+
+  transform: translateY(-2px);
+
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+
+  text-decoration: none;
+}
+
+.cta-outline {
+  background-color: transparent;
+
+  color: white;
+
+  border: 2px solid rgba(255, 255, 255, 0.7);
+}
+
+.cta-outline:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+
+  border-color: white;
+
+  color: white;
+
+  transform: translateY(-2px);
+
+  text-decoration: none;
 }

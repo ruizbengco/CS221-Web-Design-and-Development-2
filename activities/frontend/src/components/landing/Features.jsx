@@ -1,8 +1,8 @@
 import React from "react";
 import { Card } from "./components/Card";
-import "./Feature.css";
+import "./Features.css";
 
-export default function Feature() {
+export default function Features() {
   return (
     <div>
       <main className="feature-section">
