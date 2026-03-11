@@ -5,7 +5,7 @@ import "./Hero.css";
 export default function Hero() {
   return (
     <div>
-      <section className="hero-container">
+      <section className="hero">
         <div className="hero-content">
           <h1 className="hero-title">Welcome to My App</h1>
           <p className="hero-subtitle">

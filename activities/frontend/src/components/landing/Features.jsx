@@ -1,15 +1,15 @@
 import React from "react";
-import { Card } from "./components/Card";
+import Card from "../Card";
 import "./Features.css";
 
 export default function Features() {
   return (
     <div>
-      <main className="feature-section">
-        <div className="feature-inner">
+      <main className="features-section">
+        <div className="features-inner">
           <h2 className="features-title">Everything you need to know</h2>
           <p className="features-subtitle">Yadda yadda</p>
-          <div className="feature-grid">
+          <div className="features-grid">
             <Card title="feature 1">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

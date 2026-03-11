@@ -16,9 +16,7 @@ export default function Header() {
             <a href="/inventory">Inventory</a>
           </nav>
           <div className="auth-section">
-            <Button variant="primary" type="button">
-              Login
-            </Button>
+            <Button type="button">Login</Button>
           </div>
         </div>
       </header>

@@ -8,7 +8,7 @@ export default function Footer() {
         <div className="footer-content">
           <p className="footer-brand">My App</p>
           <p className="footer-copy">
-            &copy; {new Date().getFullYear} My App. All rights reserved
+            &copy; {new Date().getFullYear()} My App. All rights reserved
           </p>
         </div>
       </footer>
