@@ -1,36 +1,22 @@
-import './App.css'
-import Login from "./pages/Login";
-import { useState } from 'react';
-import Inventory from "./pages/Inventory"
-import { AuthProvider } from './contexts/authContext';
+import AuthPage from "./pages/AuthPage.jsx";
+import Inventory from "./pages/inventory.jsx";
+import Landing from "./pages/Landing";
+import "./App.css";
+import { AuthProvider } from "./contexts/AuthContext.jsx";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
-  const [formData, setFormData] = useState();
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    //link to backend
-    //fetch or actios(3rd party)
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    })
-    await fetch('http://localhost:3000/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringfy(formData),
-    });
-  };
- 
   return (
-    <>
-      <Login>
-
-      </Login>
-    </>
+    <BrowserRouter>
+      <AuthProvider>
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/auth" element={<AuthPage />} />
+          <Route path="/inventory" element={<Inventory />} />
+        </Routes>
+      </AuthProvider>
+    </BrowserRouter>
   );
-};
+}
 
 export default App;

@@ -9,34 +9,37 @@ export const authService = {
       },
       body: JSON.stringify(userData),
     });
+
     const data = await response.json();
 
     if (!response.ok) {
-      // 2nd parameter is called Fallback
       throw new Error(data.message || "Registration failed.");
     }
+
     return data;
   },
 
   async login(credentials) {
-    const response = await fetch(`${API_URL}/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(credentials),
-    });
-    const data = await response.json();
+    try {
+      const response = await fetch(`${API_URL}/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(credentials),
+      });
 
-    if (!response.ok) {
-      throw new Error(data.message || "Login failed.");
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Login failed.");
+      }
+
+      return data;
+    } catch (error) {
+      console.error("Login error:", error);
+      throw error;
     }
-    if (data.token) {
-      // localStorage is the browser storage
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
-    }
-    return data;
   },
 
   async logout() {
@@ -49,6 +52,7 @@ export const authService = {
         Authorization: `Bearer ${token}`,
       },
     });
+
     localStorage.removeItem("token");
     localStorage.removeItem("user");
 
@@ -56,9 +60,8 @@ export const authService = {
   },
 
   getCurrentUser() {
-    const userString = localStorage.getItem("user");
-    // ternary operation (short-hand if-else)
-    return userString ? JSON.stringify(userString) : null;
+    const userStr = localStorage.getItem("user");
+    return userStr ? JSON.stringify(userStr) : null;
   },
 
   getToken() {

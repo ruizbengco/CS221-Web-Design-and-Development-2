@@ -1,6 +1,6 @@
 import React from "react";
-import Header from "../components/Header";
-import Hero from "../components/Hero";
+import Header from "../components/landing/Header.jsx";
+import Hero from "../components/landing/Hero";
 import MainContent from "../components/MainContent";
 import Footer from "../components/Footer";
 

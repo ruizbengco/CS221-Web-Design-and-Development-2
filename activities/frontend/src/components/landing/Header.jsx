@@ -1,6 +1,6 @@
 import React from "react";
-import Button from "./Button";
-import "../components/Header.css";
+import Button from "../Button";
+import "./Header.css";
 
 export default function Header() {
   return (
