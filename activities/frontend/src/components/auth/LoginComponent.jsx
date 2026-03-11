@@ -1,36 +1,45 @@
 import { useState } from "react";
+import { useAuth } from "../../contexts/AuthContext";
+import Card from "../Card";
 import Input from "../Input";
 import Button from "../Button";
-import "./LoginComponent.css";
-import { useAuth } from "../../contexts/AuthContext.jsx";
 
-const LoginComponent = () => {
-  const [formData, setFormData] = useState({ email: "", password: "" });
+export default function LoginComponent() {
+  const [formData, setFormData] = useState({});
+
+  const [loading, setLoading] = useState();
   const [errors, setErrors] = useState({});
-  const [loading, setLoading] = useState(false);
+
   const { login } = useAuth();
 
+  // e means element
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((p) => ({ ...p, [name]: value }));
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    })); // email and password
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+
     try {
-      setLoading(true);
-      setErrors({});
-      await login(formData);
-      alert("Login successful.");
-    } catch (err) {
-      setErrors({ error: err.message || "Login failed" });
+      // function call to backend
+      const user = await login(formData);
+      console.log(user);
+
+      alert("Login Successful!");
+    } catch (error) {
+      setErrors({ message: error.message });
     } finally {
       setLoading(false);
     }
   };
 
-  return (
-    <form onSubmit={handleSubmit} className="auth-form">
+  <Card title="Welcome Back!">
+    <form onSubmit={handleSubmit} className="login-form">
       <Input
         label="Email"
         type="email"
@@ -38,10 +47,9 @@ const LoginComponent = () => {
         value={formData.email}
         onChange={handleChange}
         error={errors.email}
-        placeholder="Enter your email"
+        placeholder="Enter your email address"
         required
-      />
-
+      ></Input>
       <Input
         label="Password"
         type="password"
@@ -51,15 +59,11 @@ const LoginComponent = () => {
         error={errors.password}
         placeholder="Enter your password"
         required
-      />
-
-      {errors.error && <p className="form-error">{errors.error}</p>}
-
+      ></Input>
       <Button type="submit" loading={loading}>
         Login
       </Button>
+      <p className="auth-link">Don't have an account yet? Register here</p>
     </form>
-  );
-};
-
-export default LoginComponent;
+  </Card>;
+}

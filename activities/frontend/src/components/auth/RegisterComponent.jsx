@@ -1,51 +1,55 @@
 import { useState } from "react";
+import { useAuth } from "../../contexts/AuthContext";
+import Card from "../Card";
 import Input from "../Input";
 import Button from "../Button";
-import "./RegisterComponent.css";
-import { useAuth } from "../../contexts/AuthContext.jsx";
 
-const RegisterComponent = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
+export default function RegisterComponent() {
+  const [formData, setFormData] = useState({});
+
+  const [loading, setLoading] = useState();
   const [errors, setErrors] = useState({});
-  const [loading, setLoading] = useState(false);
-  const { register } = useAuth();
 
+  const { login } = useAuth();
+
+  // e means element
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((p) => ({ ...p, [name]: value }));
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    })); // email and password
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+
     try {
-      setLoading(true);
-      setErrors({});
-      await register(formData);
-      alert("Registration successful. You can now log in.");
-    } catch (err) {
-      setErrors({ error: err.message || "Registration failed" });
+      // function call to backend
+      const user = await login(formData);
+      console.log(user);
+
+      alert("Login Successful!");
+    } catch (error) {
+      setErrors({ message: error.message });
     } finally {
       setLoading(false);
     }
   };
 
-  return (
-    <form onSubmit={handleSubmit} className="auth-form">
+  <Card title="Create an Account!">
+    <form onSubmit={handleSubmit} className="register-form">
       <Input
         label="Username"
         type="text"
         name="username"
         value={formData.username}
         onChange={handleChange}
-        error={errors.name}
+        error={errors.username}
         placeholder="Enter your username"
         required
-      />
-
+      ></Input>
       <Input
         label="Email"
         type="email"
@@ -53,10 +57,9 @@ const RegisterComponent = () => {
         value={formData.email}
         onChange={handleChange}
         error={errors.email}
-        placeholder="Enter your email"
+        placeholder="Enter your email address"
         required
-      />
-
+      ></Input>
       <Input
         label="Password"
         type="password"
@@ -64,17 +67,12 @@ const RegisterComponent = () => {
         value={formData.password}
         onChange={handleChange}
         error={errors.password}
-        placeholder="Create a password"
+        placeholder="Enter your password"
         required
-      />
-
-      {errors.error && <p className="form-error">{errors.error}</p>}
-
+      ></Input>
       <Button type="submit" loading={loading}>
         Register
       </Button>
     </form>
-  );
-};
-
-export default RegisterComponent;
+  </Card>;
+}
