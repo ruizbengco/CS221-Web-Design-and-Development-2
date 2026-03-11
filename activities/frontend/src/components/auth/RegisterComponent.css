@@ -1,0 +1,14 @@
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.form-error {
+  color: var(--error-red);
+  font-size: 0.9rem;
+}
+
+.auth-panel {
+  margin-top: 12px;
+}
