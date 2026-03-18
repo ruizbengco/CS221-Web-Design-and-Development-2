@@ -1,0 +1,162 @@
+/* ProductList Container */
+.product-list-container {
+  padding: 20px;
+  width: 100%;
+}
+
+/* Loading State */
+.product-loading {
+  text-align: center;
+  padding: 40px;
+  font-size: 18px;
+  color: #666;
+}
+
+/* Error State */
+.product-error {
+  text-align: center;
+  padding: 40px;
+  font-size: 18px;
+  color: #d32f2f;
+}
+
+/* Empty State */
+.product-empty {
+  text-align: center;
+  padding: 40px;
+  font-size: 18px;
+  color: #666;
+}
+
+/* Product Grid - Uses CSS Grid for responsive layout */
+.product-grid {
+  display: grid;
+  /* Creates columns that are at least 250px wide */
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  /* Gap between grid items */
+  gap: 20px;
+}
+
+/* Individual Product Card */
+.product-card {
+  /* Card styling */
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  /* Smooth transition for hover effects */
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+/* Hover effect for product card */
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Product Image Container */
+.product-image-container {
+  width: 100%;
+  /* Fixed height for image area */
+  height: 200px;
+  overflow: hidden;
+  background-color: #f5f5f5;
+}
+
+/* Product Image */
+.product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Placeholder when no image */
+.product-image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+  font-size: 14px;
+}
+
+/* Product Info Section */
+.product-info {
+  padding: 16px;
+}
+
+/* Product Name */
+.product-name {
+  margin: 0 0 8px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Product Category */
+.product-category {
+  display: inline-block;
+  padding: 4px 8px;
+  background-color: #e3f2fd;
+  color: #1976d2;
+  border-radius: 4px;
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+
+/* Product Description */
+.product-description {
+  margin: 8px 0;
+  font-size: 14px;
+  color: #666;
+  /* Limit to 2 lines */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Price and Stock Container */
+.product-price-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #e0e0e0;
+}
+
+/* Product Price */
+.product-price {
+  font-size: 20px;
+  font-weight: bold;
+  color: #2e7d32;
+}
+
+/* Stock Status */
+.product-stock {
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+/* In Stock - Green */
+.product-stock.in-stock {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+/* Out of Stock - Red */
+.product-stock.out-of-stock {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 600px) {
+  .product-grid {
+    /* Single column on very small screens */
+    grid-template-columns: 1fr;
+  }
+}

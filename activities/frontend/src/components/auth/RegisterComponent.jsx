@@ -38,41 +38,44 @@ export default function RegisterComponent() {
     }
   };
 
-  <Card title="Create an Account!">
-    <form onSubmit={handleSubmit} className="register-form">
-      <Input
-        label="Username"
-        type="text"
-        name="username"
-        value={formData.username}
-        onChange={handleChange}
-        error={errors.username}
-        placeholder="Enter your username"
-        required
-      ></Input>
-      <Input
-        label="Email"
-        type="email"
-        name="email"
-        value={formData.email}
-        onChange={handleChange}
-        error={errors.email}
-        placeholder="Enter your email address"
-        required
-      ></Input>
-      <Input
-        label="Password"
-        type="password"
-        name="password"
-        value={formData.password}
-        onChange={handleChange}
-        error={errors.password}
-        placeholder="Enter your password"
-        required
-      ></Input>
-      <Button type="submit" loading={loading}>
-        Register
-      </Button>
-    </form>
-  </Card>;
+  // Return the JSX to render
+  return (
+    <Card title="Create an Account!">
+      <form onSubmit={handleSubmit} className="register-form">
+        <Input
+          label="Username"
+          type="text"
+          name="username"
+          value={formData.username}
+          onChange={handleChange}
+          error={errors.username}
+          placeholder="Enter your username"
+          required
+        ></Input>
+        <Input
+          label="Email"
+          type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          error={errors.email}
+          placeholder="Enter your email address"
+          required
+        ></Input>
+        <Input
+          label="Password"
+          type="password"
+          name="password"
+          value={formData.password}
+          onChange={handleChange}
+          error={errors.password}
+          placeholder="Enter your password"
+          required
+        ></Input>
+        <Button type="submit" loading={loading}>
+          Register
+        </Button>
+      </form>
+    </Card>
+  );
 }

@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import FeaturedProducts from "../products/FeaturedProducts";
 import "./Hero.css";
 
 export default function Hero() {
@@ -20,6 +21,11 @@ export default function Hero() {
             </Link>
           </div>
         </div>
+      </section>
+      
+      {/* Featured Products Section */}
+      <section className="hero-featured">
+        <FeaturedProducts />
       </section>
     </div>
   );

@@ -38,32 +38,35 @@ export default function LoginComponent() {
     }
   };
 
-  <Card title="Welcome Back!">
-    <form onSubmit={handleSubmit} className="login-form">
-      <Input
-        label="Email"
-        type="email"
-        name="email"
-        value={formData.email}
-        onChange={handleChange}
-        error={errors.email}
-        placeholder="Enter your email address"
-        required
-      ></Input>
-      <Input
-        label="Password"
-        type="password"
-        name="password"
-        value={formData.password}
-        onChange={handleChange}
-        error={errors.password}
-        placeholder="Enter your password"
-        required
-      ></Input>
-      <Button type="submit" loading={loading}>
-        Login
-      </Button>
-      <p className="auth-link">Don't have an account yet? Register here</p>
-    </form>
-  </Card>;
+  // Return the JSX to render
+  return (
+    <Card title="Welcome Back!">
+      <form onSubmit={handleSubmit} className="login-form">
+        <Input
+          label="Email"
+          type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          error={errors.email}
+          placeholder="Enter your email address"
+          required
+        ></Input>
+        <Input
+          label="Password"
+          type="password"
+          name="password"
+          value={formData.password}
+          onChange={handleChange}
+          error={errors.password}
+          placeholder="Enter your password"
+          required
+        ></Input>
+        <Button type="submit" loading={loading}>
+          Login
+        </Button>
+        <p className="auth-link">Don't have an account yet? Register here</p>
+      </form>
+    </Card>
+  );
 }

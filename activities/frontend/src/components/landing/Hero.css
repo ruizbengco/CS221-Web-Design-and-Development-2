@@ -128,3 +128,10 @@
 
   text-decoration: none;
 }
+
+/* ── Hero Featured Products Section ── */
+
+.hero-featured {
+  background-color: #fafafa;
+  padding: 40px 20px;
+}
