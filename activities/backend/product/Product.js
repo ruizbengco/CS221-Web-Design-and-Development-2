@@ -2,6 +2,12 @@ import mongoose from "mongoose";
 
 const productSchema = new mongoose.Schema(
   {
+    // Reference to the user who created this product
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
+    },
     name: {
       type: String,
       required: true,
@@ -29,8 +35,8 @@ const productSchema = new mongoose.Schema(
       type: String,
       default: "general",
     },
-    // Number of items in stock
-    stock: {
+    // Number of items in stock (countInStock per schema requirement)
+    countInStock: {
       type: Number,
       default: 0,
       min: 0,

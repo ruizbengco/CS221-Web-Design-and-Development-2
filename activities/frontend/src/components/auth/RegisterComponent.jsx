@@ -4,13 +4,17 @@ import Card from "../Card";
 import Input from "../Input";
 import Button from "../Button";
 
-export default function RegisterComponent() {
-  const [formData, setFormData] = useState({});
+export default function RegisterComponent({ onToggle }) {
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
 
   const [loading, setLoading] = useState();
   const [errors, setErrors] = useState({});
 
-  const { login } = useAuth();
+  const { register } = useAuth();
 
   // e means element
   const handleChange = (e) => {
@@ -18,7 +22,7 @@ export default function RegisterComponent() {
     setFormData((prev) => ({
       ...prev,
       [name]: value,
-    })); // email and password
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -27,10 +31,12 @@ export default function RegisterComponent() {
 
     try {
       // function call to backend
-      const user = await login(formData);
-      console.log(user);
+      await register(formData);
 
-      alert("Login Successful!");
+      alert("Registration Successful! Please login.");
+      
+      // Switch to login after successful registration
+      onToggle();
     } catch (error) {
       setErrors({ message: error.message });
     } finally {
@@ -75,6 +81,12 @@ export default function RegisterComponent() {
         <Button type="submit" loading={loading}>
           Register
         </Button>
+        <p className="auth-link">
+          Already have an account?{" "}
+          <span className="auth-toggle" onClick={onToggle}>
+            Login here
+          </span>
+        </p>
       </form>
     </Card>
   );

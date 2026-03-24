@@ -47,3 +47,13 @@
   color: white;
   border-color: var(--primary-blue);
 }
+
+.auth-toggle {
+  color: var(--primary-blue);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.auth-toggle:hover {
+  text-decoration: underline;
+}

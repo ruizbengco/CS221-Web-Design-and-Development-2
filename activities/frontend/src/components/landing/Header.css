@@ -1,10 +1,11 @@
 /* Header Styles */
 .landing-header {
-  background-color: var(--background-white);
+  background-color: var(--theme-bg);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   position: sticky;
   top: 0;
   z-index: 100;
+  transition: background-color 0.3s ease;
 }
 .header-container {
   max-width: 1200px;
@@ -15,11 +16,18 @@
   align-items: center;
   gap: 2rem;
 }
-.logo h2 {
+.logo h2,
+.logo a {
   margin: 0;
-  color: var(--primary-blue);
+  color: var(--theme-accent);
   font-size: 1.75rem;
   font-weight: 700;
+  transition: color 0.3s ease;
+  text-decoration: none;
+}
+
+.logo a:hover {
+  color: var(--theme-accent);
 }
 .navigation {
   display: flex;
@@ -27,17 +35,65 @@
   align-items: center;
 }
 .navigation a {
-  color: var(--text-dark);
+  color: var(--theme-text);
   font-weight: 500;
   transition: color 0.3s ease;
   text-decoration: none;
 }
 .navigation a:hover {
-  color: var(--primary-blue);
+  color: var(--theme-accent);
   text-decoration: none;
 }
 .auth-section {
   display: flex;
   gap: 1rem;
   align-items: center;
+}
+
+/* Theme toggle container in header */
+.auth-section .theme-toggle {
+  margin-right: 0.5rem;
+}
+
+/* Cart Icon */
+.cart-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border-radius: 50%;
+  transition: background-color 0.3s;
+}
+
+.cart-icon:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.cart-emoji {
+  font-size: 1.4rem;
+}
+
+.cart-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #e74c3c;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: bold;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+}
+
+/* User name in header */
+.user-name {
+  font-size: 0.9rem;
+  color: var(--theme-text);
+  margin-right: 5px;
 }

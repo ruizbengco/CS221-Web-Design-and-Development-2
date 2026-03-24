@@ -1,9 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 import FeaturedProducts from "../products/FeaturedProducts";
 import "./Hero.css";
 
 export default function Hero() {
+  // Get authentication status
+  const { isAuthenticated } = useAuth();
+
+  // If logged in, go to products page; if not, go to login
+  const getStartedLink = isAuthenticated ? "/products" : "/login";
+
   return (
     <div>
       <section className="hero">
@@ -13,7 +20,7 @@ export default function Hero() {
             Discover the best products at unbeatable prices.
           </p>
           <div className="hero-cta">
-            <Link to="/login" className="cta-btn cta-primary">
+            <Link to={getStartedLink} className="cta-btn cta-primary">
               Get Started
             </Link>
             <Link to="/inventory" className="cta-btn cta-outline">

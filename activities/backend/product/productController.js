@@ -17,7 +17,8 @@ export const getAll = async (req, res) => {
     }
 
     // Fetch products from database with the filter
-    const products = await Product.find(filter);
+    // Populate user field to show who created each product
+    const products = await Product.find(filter).populate("user", "username");
 
     // Return the products array
     res.status(200).json({ products });
@@ -40,6 +41,18 @@ export const getFeatured = async (req, res) => {
     const products = await Product.find(filter);
 
     // Return featured products
+    res.status(200).json({ products });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// GET /api/product/my-products - Get products created by logged in user
+export const getMyProducts = async (req, res) => {
+  try {
+    // Get products where user matches the logged in user
+    const products = await Product.find({ user: req.user.id });
+
     res.status(200).json({ products });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -89,7 +102,7 @@ export const toggleFeatured = async (req, res) => {
 export const create = async (req, res) => {
   try {
     // Extract all fields from request body
-    const { name, slug, description, price, image, category, stock } = req.body;
+    const { name, slug, description, price, image, category, countInStock } = req.body;
 
     // Search for product with same slug
     const productExists = await Product.findOne({ slug });
@@ -98,15 +111,17 @@ export const create = async (req, res) => {
     }
 
     // Create new product with all fields
+    // Attach the logged-in user as the owner
     // isActive defaults to true, isFeatured defaults to false from schema
     const product = await Product.create({
+      user: req.user.id, // Attach the user who created this product
       name,
       slug,
       description,
       price,
       image,
       category,
-      stock,
+      countInStock,
     });
 
     // Return success message with created product
@@ -125,12 +140,18 @@ export const update = async (req, res) => {
     const { id } = req.params;
 
     // Extract all fields from request body
-    const { name, slug, description, price, image, category, stock, isActive } = req.body;
+    const { name, slug, description, price, image, category, countInStock, isActive } = req.body;
 
     // Check if product exists
     const productExists = await Product.findById(id);
     if (!productExists) {
       return res.status(400).json({ message: "Product does not exist." });
+    }
+
+    // Check if the logged-in user owns this product
+    // Convert to string for comparison
+    if (productExists.user.toString() !== req.user.id) {
+      return res.status(403).json({ message: "Not authorized to update this product." });
     }
 
     // Build the update fields object
@@ -141,7 +162,7 @@ export const update = async (req, res) => {
       price,
       image,
       category,
-      stock,
+      countInStock,
       isActive,
       updatedAt: new Date(),
     };
@@ -156,6 +177,34 @@ export const update = async (req, res) => {
     res.status(200).json({
       message: "Product updated successfully.",
       product,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// DELETE /api/product/:id - Delete a product
+export const deleteProduct = async (req, res) => {
+  try {
+    // Get product ID from URL parameters
+    const { id } = req.params;
+
+    // Check if product exists
+    const product = await Product.findById(id);
+    if (!product) {
+      return res.status(404).json({ message: "Product not found." });
+    }
+
+    // Check if the logged-in user owns this product
+    if (product.user.toString() !== req.user.id) {
+      return res.status(403).json({ message: "Not authorized to delete this product." });
+    }
+
+    // Delete the product from database
+    await Product.findByIdAndDelete(id);
+
+    res.status(200).json({
+      message: "Product deleted successfully.",
     });
   } catch (error) {
     res.status(500).json({ message: error.message });

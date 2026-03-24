@@ -35,6 +35,15 @@ export const authService = {
         throw new Error(data.message || "Login failed.");
       }
 
+      // Save token and user to localStorage
+      // Backend returns { _id, username, token } - create user object
+      const userData = {
+        _id: data._id,
+        username: data.username,
+      };
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(userData));
+
       return data;
     } catch (error) {
       console.error("Login error:", error);
@@ -60,8 +69,17 @@ export const authService = {
   },
 
   getCurrentUser() {
-    const userStr = localStorage.getItem("user");
-    return userStr ? JSON.stringify(userStr) : null;
+    try {
+      const userStr = localStorage.getItem("user");
+      if (!userStr || userStr === "undefined" || userStr === "null") {
+        return null;
+      }
+      return JSON.parse(userStr);
+    } catch (error) {
+      // If parsing fails, clear the corrupted data
+      localStorage.removeItem("user");
+      return null;
+    }
   },
 
   getToken() {

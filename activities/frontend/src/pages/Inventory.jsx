@@ -7,6 +7,7 @@ import TextArea from "../components/TextArea";
 import slugify from "slugify";
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { productService } from "../services/productService";
 
 const Inventory = () => {
   const [formData, setFormData] = useState({
@@ -14,12 +15,15 @@ const Inventory = () => {
     slug: "",
     description: "",
     price: 0,
+    image: "",
+    category: "",
+    countInStock: 0,
   });
   const [errors, setErrors] = useState({});
-  const [loading, setLoading] = useState();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [slug, setSlug] = useState("");
 
-  const { user } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -32,12 +36,33 @@ const Inventory = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
 
     try {
-      alert("Product Page.");
-      setLoading(false);
+      // Prepare product data with the slug
+      const productData = {
+        name: formData.name,
+        slug: slug, // Use the auto-generated slug
+        description: formData.description,
+        price: parseFloat(formData.price),
+        image: formData.image,
+        category: formData.category || "general",
+        countInStock: parseInt(formData.countInStock, 10),
+      };
+
+      // Call the backend API to create the product
+      await productService.create(productData);
+
+      // Show success message
+      alert("Product created successfully!");
+
+      // Redirect to My Products page
+      navigate("/my-products");
     } catch (error) {
       setErrors({ error: error.message });
+      alert("Failed to create product: " + error.message);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -50,10 +75,11 @@ const Inventory = () => {
   }, [formData]);
 
   useEffect(() => {
-    if (!user) {
+    // Only redirect if not loading and no user
+    if (!authLoading && !user) {
       navigate("/login");
     }
-  }, [user]);
+  }, [user, authLoading, navigate]);
 
   return (
     <Card title="Create Product">
@@ -91,8 +117,36 @@ const Inventory = () => {
           value={formData.price}
           error={errors.price}
           onChange={handleChange}
+          required
         />
-        <Button type="submit" loading={loading}>
+        <Input
+          label="Image URL"
+          type="text"
+          name="image"
+          value={formData.image}
+          onChange={handleChange}
+          error={errors.image}
+          placeholder="https://example.com/image.jpg"
+        />
+        <Input
+          label="Category"
+          type="text"
+          name="category"
+          value={formData.category}
+          onChange={handleChange}
+          error={errors.category}
+          placeholder="e.g., Electronics, Food, Clothing"
+        />
+        <Input
+          label="Count In Stock"
+          name="countInStock"
+          type="number"
+          value={formData.countInStock}
+          error={errors.countInStock}
+          onChange={handleChange}
+          placeholder="Number of items available"
+        />
+        <Button type="submit" loading={isSubmitting}>
           Save Product
         </Button>
       </form>

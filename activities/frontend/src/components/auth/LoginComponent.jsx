@@ -1,16 +1,21 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import Card from "../Card";
 import Input from "../Input";
 import Button from "../Button";
 
-export default function LoginComponent() {
-  const [formData, setFormData] = useState({});
+export default function LoginComponent({ onToggle }) {
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
 
   const [loading, setLoading] = useState();
   const [errors, setErrors] = useState({});
 
   const { login } = useAuth();
+  const navigate = useNavigate();
 
   // e means element
   const handleChange = (e) => {
@@ -27,10 +32,10 @@ export default function LoginComponent() {
 
     try {
       // function call to backend
-      const user = await login(formData);
-      console.log(user);
+      await login(formData);
 
-      alert("Login Successful!");
+      // Redirect to home page after successful login
+      navigate("/");
     } catch (error) {
       setErrors({ message: error.message });
     } finally {
@@ -65,7 +70,12 @@ export default function LoginComponent() {
         <Button type="submit" loading={loading}>
           Login
         </Button>
-        <p className="auth-link">Don't have an account yet? Register here</p>
+        <p className="auth-link">
+          Don't have an account yet?{" "}
+          <span className="auth-toggle" onClick={onToggle}>
+            Register here
+          </span>
+        </p>
       </form>
     </Card>
   );

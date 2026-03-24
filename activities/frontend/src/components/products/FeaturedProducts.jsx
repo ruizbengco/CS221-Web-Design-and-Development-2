@@ -116,8 +116,8 @@ function FeaturedProducts() {
                 </span>
                 
                 {/* Stock Status */}
-                <span className={`featured-stock ${product.stock > 0 ? "in-stock" : "out-of-stock"}`}>
-                  {product.stock > 0 ? `${product.stock} in stock` : "Out of stock"}
+                <span className={`featured-stock ${product.countInStock > 0 ? "in-stock" : "out-of-stock"}`}>
+                  {product.countInStock > 0 ? `${product.countInStock} in stock` : "Out of stock"}
                 </span>
               </div>
             </div>

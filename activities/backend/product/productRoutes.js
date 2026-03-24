@@ -5,23 +5,28 @@ import {
   getAll,
   getFeatured,
   toggleFeatured,
+  getMyProducts,
 } from "./productController.js";
+import { protect, adminOnly } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-// GET /api/product - List all products (with active filtering)
+// GET /api/product - List all active products (public)
 router.get("/", getAll);
 
-// GET /api/product/featured - List featured products
+// GET /api/product/featured - List featured products (public)
 router.get("/featured", getFeatured);
 
-// POST /api/product/create - Create a new product
-router.post("/create", create);
+// GET /api/product/my-products - Get products created by logged in user
+router.get("/my-products", protect, getMyProducts);
 
-// PUT /api/product/update/:id - Update a product
-router.put("/update/:id", update);
+// POST /api/product/create - Create a new product (protected)
+router.post("/create", protect, create);
 
-// POST /api/product/:id/feature - Toggle featured status
-router.post("/:id/feature", toggleFeatured);
+// PUT /api/product/update/:id - Update a product (protected - owner only)
+router.put("/update/:id", protect, update);
+
+// POST /api/product/:id/feature - Toggle featured status (admin only)
+router.post("/:id/feature", protect, adminOnly, toggleFeatured);
 
 export default router;

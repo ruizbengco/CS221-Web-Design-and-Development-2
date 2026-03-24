@@ -1,0 +1,266 @@
+/* Products Page Styles */
+.products-page {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.products-page h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.product-card .product-image {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 8px;
+  background-color: #f0f0f0;
+  margin-bottom: 15px;
+}
+
+.product-card .product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-card .no-image {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+}
+
+.product-card .product-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-card .product-info h3 {
+  margin: 0 0 5px 0;
+  font-size: 1.2rem;
+}
+
+.product-card .product-category {
+  color: #666;
+  font-size: 0.9rem;
+  margin: 0 0 5px 0;
+}
+
+.product-card .product-seller {
+  color: #888;
+  font-size: 0.8rem;
+  font-style: italic;
+  margin: 0 0 10px 0;
+}
+
+.product-card .product-description {
+  color: #555;
+  font-size: 0.9rem;
+  flex: 1;
+  margin-bottom: 10px;
+}
+
+.product-card .product-price {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #2ecc71;
+  margin: 10px 0;
+}
+
+.product-card .product-stock {
+  font-size: 0.9rem;
+  margin: 5px 0;
+}
+
+.product-card .product-stock.in-stock {
+  color: #27ae60;
+}
+
+.product-card .product-stock.out-of-stock {
+  color: #e74c3c;
+  font-weight: bold;
+}
+
+.add-to-cart-btn:disabled {
+  background-color: #95a5a6;
+  cursor: not-allowed;
+}
+
+.add-to-cart-btn {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+}
+
+.add-to-cart-btn:hover {
+  background-color: #2980b9;
+}
+
+.error-message {
+  color: red;
+  text-align: center;
+  padding: 20px;
+}
+
+.success-message {
+  color: #27ae60;
+  background-color: #e8f8f0;
+  padding: 10px;
+  text-align: center;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.success-message a {
+  color: #27ae60;
+  text-decoration: underline;
+  margin-left: 5px;
+}
+
+.success-message a:hover {
+  color: #219a52;
+}
+
+/* Quantity Popup Modal */
+.quantity-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.quantity-popup {
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  min-width: 320px;
+  text-align: center;
+}
+
+.quantity-popup h3 {
+  margin: 0 0 15px 0;
+  color: #333;
+}
+
+.quantity-popup .popup-product-name {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 0 0 5px 0;
+}
+
+.quantity-popup .popup-product-price {
+  color: #666;
+  margin: 0 0 20px 0;
+}
+
+.quantity-popup .quantity-selector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.quantity-popup .qty-btn {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #ddd;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.quantity-popup .qty-btn:hover {
+  background-color: #e9e9e9;
+}
+
+.quantity-popup .qty-input {
+  width: 70px;
+  height: 40px;
+  text-align: center;
+  font-size: 1.1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.quantity-popup .popup-total {
+  font-size: 1.1rem;
+  margin: 0 0 20px 0;
+}
+
+.quantity-popup .popup-total strong {
+  color: #27ae60;
+  font-size: 1.3rem;
+}
+
+.quantity-popup .popup-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.quantity-popup .btn-cancel {
+  padding: 10px 20px;
+  border: 1px solid #ddd;
+  background-color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s;
+}
+
+.quantity-popup .btn-cancel:hover {
+  background-color: #f5f5f5;
+}
+
+.quantity-popup .btn-confirm {
+  padding: 10px 20px;
+  border: none;
+  background-color: #27ae60;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.quantity-popup .btn-confirm:hover {
+  background-color: #219a52;
+}
