@@ -1,0 +1,31 @@
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.auth-form .form-error {
+  color: var(--error-red);
+  font-size: 0.9rem;
+}
+
+.auth-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.tab {
+  background: transparent;
+  border: 1px solid var(--border-gray);
+  padding: 8px 14px;
+  border-radius: 6px;
+  color: var(--text-dark);
+  cursor: pointer;
+}
+
+.tab.active {
+  background: var(--primary-blue);
+  color: white;
+  border-color: var(--primary-blue);
+}

@@ -1,0 +1,35 @@
+.content-wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 4rem 1rem;
+}
+
+.intro-section {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.intro-section h2 {
+  font-size: 2.5rem;
+  color: #333;
+}
+
+/* Responsive Grid */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.feature-card {
+  padding: 2rem;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  transition: transform 0.2s ease;
+  background: #fafafa;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}

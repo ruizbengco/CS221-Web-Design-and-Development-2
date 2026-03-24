@@ -1,0 +1,43 @@
+/* Header Styles */
+.landing-header {
+  background-color: var(--background-white);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+}
+.logo h2 {
+  margin: 0;
+  color: var(--primary-blue);
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+.navigation {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+.navigation a {
+  color: var(--text-dark);
+  font-weight: 500;
+  transition: color 0.3s ease;
+  text-decoration: none;
+}
+.navigation a:hover {
+  color: var(--primary-blue);
+  text-decoration: none;
+}
+.auth-section {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}

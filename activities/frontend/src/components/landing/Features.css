@@ -1,0 +1,35 @@
+/* ── Features Section (Now Products Page) ── */
+
+.features-section {
+  background-color: var(--background-white);
+
+  flex: 1;
+}
+
+.features-inner {
+  max-width: 1200px;
+
+  margin: 0 auto;
+
+  padding: 3rem 2rem 4rem;
+
+  text-align: center;
+}
+
+.features-title {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+
+  font-weight: 700;
+
+  color: var(--text-dark);
+
+  margin: 0 0 0.75rem;
+}
+
+.features-subtitle {
+  color: var(--text-light);
+
+  font-size: 1.1rem;
+
+  margin: 0 0 2rem;
+}
