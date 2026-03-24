@@ -69,14 +69,35 @@ const MyProducts = () => {
     }
   };
 
-  // Function to start editing stock
+  // Function to toggle product featured status
+  const handleToggleFeatured = async (product) => {
+    try {
+      await productService.toggleFeatured(product._id);
+      
+      // Update local state to reflect the change
+      setProducts(products.map(p => 
+        p._id === product._id ? { ...p, isFeatured: !p.isFeatured } : p
+      ));
+      
+      setSuccess(`Product is now ${!product.isFeatured ? "featured" : "not featured"}!`);
+      setTimeout(() => setSuccess(null), 3000);
+    } catch (err) {
+      setError(err.message);
+      setTimeout(() => setError(null), 3000);
+    }
+  };
+
+  // Function to open stock edit popup
   const handleEditStock = (product) => {
     setEditingStock(product._id);
     setStockValue(product.countInStock.toString());
   };
 
   // Function to save stock update
-  const handleSaveStock = async (product) => {
+  const handleSaveStock = async () => {
+    const product = products.find(p => p._id === editingStock);
+    if (!product) return;
+
     const newStock = parseInt(stockValue, 10);
     
     // Validate stock value
@@ -161,34 +182,10 @@ const MyProducts = () => {
               <p className="product-category">{product.category}</p>
               <p className="product-price">${product.price?.toFixed(2)}</p>
               
-              {/* Stock editing section */}
-              <div className="product-stock-row">
-                <span className="stock-label">Stock:</span>
-                {editingStock === product._id ? (
-                  <div className="stock-edit">
-                    <input
-                      type="number"
-                      value={stockValue}
-                      onChange={(e) => setStockValue(e.target.value)}
-                      min="0"
-                      className="stock-input"
-                    />
-                    <Button onClick={() => handleSaveStock(product)} className="btn-save">
-                      Save
-                    </Button>
-                    <Button onClick={handleCancelEdit} className="btn-cancel">
-                      Cancel
-                    </Button>
-                  </div>
-                ) : (
-                  <>
-                    <span className="stock-value">{product.countInStock}</span>
-                    <Button onClick={() => handleEditStock(product)} className="btn-edit-stock">
-                      Edit Stock
-                    </Button>
-                  </>
-                )}
-              </div>
+              {/* Stock display */}
+              <p className="product-stock-display">
+                Stock: <span className="stock-value">{product.countInStock}</span>
+              </p>
               
               <p className="product-status">
                 Status: <span className={product.isActive ? "status-active" : "status-inactive"}>
@@ -197,6 +194,18 @@ const MyProducts = () => {
               </p>
             </div>
             <div className="product-actions">
+              <Button 
+                onClick={() => handleToggleFeatured(product)}
+                className={product.isFeatured ? "btn-unfeature" : "btn-feature"}
+              >
+                {product.isFeatured ? "Unfeature" : "Feature"}
+              </Button>
+              <Button 
+                onClick={() => handleEditStock(product)}
+                className="btn-edit-stock-action"
+              >
+                Edit Stock ({product.countInStock})
+              </Button>
               <Button 
                 onClick={() => handleToggleActive(product)}
                 className={product.isActive ? "btn-inactive" : "btn-activate"}
@@ -207,6 +216,36 @@ const MyProducts = () => {
           </Card>
         ))}
       </div>
+
+      {/* Stock Edit Popup */}
+      {editingStock && (
+        <div className="stock-popup-overlay" onClick={handleCancelEdit}>
+          <div className="stock-popup" onClick={(e) => e.stopPropagation()}>
+            <h3>Edit Stock</h3>
+            <p className="stock-product-name">
+              {products.find(p => p._id === editingStock)?.name}
+            </p>
+            <div className="stock-input-group">
+              <label>New Stock:</label>
+              <input
+                type="number"
+                value={stockValue}
+                onChange={(e) => setStockValue(e.target.value)}
+                min="0"
+                className="stock-popup-input"
+              />
+            </div>
+            <div className="stock-popup-buttons">
+              <button className="btn-cancel" onClick={handleCancelEdit}>
+                Cancel
+              </button>
+              <button className="btn-save" onClick={handleSaveStock}>
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

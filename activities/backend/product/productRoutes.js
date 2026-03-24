@@ -26,7 +26,7 @@ router.post("/create", protect, create);
 // PUT /api/product/update/:id - Update a product (protected - owner only)
 router.put("/update/:id", protect, update);
 
-// POST /api/product/:id/feature - Toggle featured status (admin only)
-router.post("/:id/feature", protect, adminOnly, toggleFeatured);
+// POST /api/product/:id/feature - Toggle featured status (owner or admin only)
+router.post("/:id/feature", protect, toggleFeatured);
 
 export default router;

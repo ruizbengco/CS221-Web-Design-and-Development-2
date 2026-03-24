@@ -17,8 +17,8 @@ export const getAll = async (req, res) => {
     }
 
     // Fetch products from database with the filter
-    // Populate user field to show who created each product
-    const products = await Product.find(filter).populate("user", "username");
+    // Populate user field to show who created each product (username and _id)
+    const products = await Product.find(filter).populate("user", "username _id");
 
     // Return the products array
     res.status(200).json({ products });
@@ -76,6 +76,14 @@ export const toggleFeatured = async (req, res) => {
     // If product doesn't exist, return error
     if (!product) {
       return res.status(404).json({ message: "Product not found." });
+    }
+
+    // Check if the logged-in user owns this product or is an admin
+    const isOwner = product.user.toString() === req.user.id;
+    const isAdmin = req.user.role === "Admin" || req.user.role === "Moderator";
+    
+    if (!isOwner && !isAdmin) {
+      return res.status(403).json({ message: "Not authorized to feature this product." });
     }
 
     // Toggle the isFeatured value (true becomes false, false becomes true)

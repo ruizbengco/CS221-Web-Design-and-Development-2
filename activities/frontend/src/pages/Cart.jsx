@@ -1,10 +1,16 @@
+import { useEffect } from "react";
 import { useCart } from "../contexts/CartContext";
-import { Link } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import "./Cart.css";
 
 const Cart = () => {
-  // Get cart functions and values from context
+  // Get auth info
+  const { isAuthenticated, loading: authLoading } = useAuth();
+  const navigate = useNavigate();
+  
+  // Get cart functions from context
   const {
     cartItems,
     removeFromCart,
@@ -15,9 +21,21 @@ const Cart = () => {
     isLoaded,
   } = useCart();
 
-  // Show loading while cart is being loaded from localStorage
-  if (!isLoaded) {
+  // Redirect to login if not authenticated
+  useEffect(() => {
+    if (!authLoading && !isAuthenticated) {
+      navigate("/login");
+    }
+  }, [authLoading, isAuthenticated, navigate]);
+
+  // Show loading while cart is being loaded
+  if (!isLoaded || authLoading) {
     return <div className="cart-page">Loading...</div>;
+  }
+
+  // Don't render if not authenticated
+  if (!isAuthenticated) {
+    return null;
   }
 
   return (
@@ -47,9 +65,6 @@ const Cart = () => {
                 <div className="cart-item-details">
                   <h3>{item.name}</h3>
                   <p className="cart-item-price">${item.price?.toFixed(2)}</p>
-                  <p className="cart-item-seller">
-                    Sold by: {item.user?.username || "Unknown"}
-                  </p>
                 </div>
 
                 <div className="cart-item-quantity">
@@ -98,7 +113,9 @@ const Cart = () => {
               <Link to="/products" className="btn-continue-shopping">
                 Continue Shopping
               </Link>
-              <Button className="btn-checkout">Proceed to Checkout</Button>
+              <Link to="/checkout" className="btn-checkout-link">
+                Proceed to Checkout
+              </Link>
             </div>
           </div>
         </>

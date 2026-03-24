@@ -42,7 +42,8 @@
 }
 
 .hero-accent {
-  color: #d1fae5;
+  color: white;
+  opacity: 0.8;
 }
 
 .hero-subtitle {
@@ -98,7 +99,8 @@
 }
 
 .cta-primary:hover {
-  background-color: #f0f9ff;
+  background-color: white;
+  opacity: 0.9;
 
   color: var(--hover-blue);
 
@@ -127,11 +129,4 @@
   transform: translateY(-2px);
 
   text-decoration: none;
-}
-
-/* ── Hero Featured Products Section ── */
-
-.hero-featured {
-  background-color: #fafafa;
-  padding: 40px 20px;
 }

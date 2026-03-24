@@ -14,6 +14,9 @@ function ProductList() {
   // error - stores any error messages
   const [error, setError] = useState(null);
 
+  // Current slide index for carousel
+  const [currentIndex, setCurrentIndex] = useState(0);
+
   // useEffect runs when the component loads
   // It's like "when this component appears on screen, do this..."
   useEffect(() => {
@@ -27,11 +30,14 @@ function ProductList() {
       // Set loading to true before fetching
       setLoading(true);
       
-      // Call the productService to get products
+      // Call the productService to get all products
       const data = await productService.getAll();
       
-      // Update the products state with the data from API
-      setProducts(data.products);
+      // Filter to only show featured products
+      const featuredProducts = (data.products || []).filter(p => p.isFeatured);
+      
+      // Update the products state with only featured products
+      setProducts(featuredProducts);
       
       // Set loading to false after getting data
       setLoading(false);
@@ -43,6 +49,23 @@ function ProductList() {
       setLoading(false);
     }
   };
+
+  // Calculate how many products to show (3 products per "slide")
+  const productsPerSlide = 3;
+  const maxIndex = Math.max(0, products.length - productsPerSlide);
+
+  // Go to previous slide
+  const goToPrev = () => {
+    setCurrentIndex((prev) => Math.max(0, prev - 1));
+  };
+
+  // Go to next slide
+  const goToNext = () => {
+    setCurrentIndex((prev) => Math.min(maxIndex, prev + 1));
+  };
+
+  // Get products for current slide
+  const currentProducts = products.slice(currentIndex, currentIndex + productsPerSlide);
 
   // If loading, show a loading message
   if (loading) {
@@ -62,61 +85,81 @@ function ProductList() {
     );
   }
 
-  // Render the product grid
+  // Render the product carousel
   return (
-    <div className="product-list-container">
-      {/* Check if there are no products */}
-      {products.length === 0 ? (
-        <div className="product-empty">No products available.</div>
-      ) : (
-        /* Map through products and create a card for each */
-        <div className="product-grid">
-          {products.map((product) => (
-            <div key={product._id} className="product-card">
-              {/* Product Image */}
-              <div className="product-image-container">
-                {product.image ? (
-                  <img 
-                    src={product.image} 
-                    alt={product.name} 
-                    className="product-image" 
-                  />
-                ) : (
-                  <div className="product-image-placeholder">
-                    No Image
+    <div className="product-carousel">
+      {/* Left Arrow */}
+      <button 
+        className="carousel-arrow carousel-prev" 
+        onClick={goToPrev}
+        disabled={currentIndex === 0 || products.length === 0}
+      >
+        &#8249;
+      </button>
+
+      {/* Product Cards */}
+      <div className="product-carousel-container">
+        {/* Check if there are no featured products */}
+        {products.length === 0 ? (
+          <div className="product-empty">No featured products available.</div>
+        ) : (
+          /* Show current products */
+          <div className="product-grid">
+            {currentProducts.map((product) => (
+              <div key={product._id} className="product-card">
+                {/* Left side - Image */}
+                <div className="product-card-left">
+                  <div className="product-image-container">
+                    {product.image ? (
+                      <img 
+                        src={product.image} 
+                        alt={product.name} 
+                        className="product-image" 
+                      />
+                    ) : (
+                      <div className="product-image-placeholder">
+                        No Image
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
-              
-              {/* Product Info */}
-              <div className="product-info">
-                {/* Product Name */}
-                <h3 className="product-name">{product.name}</h3>
+                </div>
                 
-                {/* Product Category */}
-                <span className="product-category">{product.category}</span>
-                
-                {/* Product Description */}
-                <p className="product-description">
-                  {product.description || "No description available."}
-                </p>
-                
-                {/* Product Price */}
-                <div className="product-price-container">
-                  <span className="product-price">
-                    ${product.price.toFixed(2)}
-                  </span>
+                {/* Right side - Info */}
+                <div className="product-card-right">
+                  {/* Product Name */}
+                  <h3 className="product-name">{product.name}</h3>
                   
-                  {/* Stock Status */}
-                  <span className={`product-stock ${product.countInStock > 0 ? "in-stock" : "out-of-stock"}`}>
-                    {product.countInStock > 0 ? `${product.countInStock} in stock` : "Out of stock"}
-                  </span>
+                  {/* Category and Seller */}
+                  <div className="product-meta">
+                    <span className="product-category">{product.category}</span>
+                    <span className="product-seller">Sold by: {product.user?.username || "Unknown"}</span>
+                  </div>
+                  
+                  {/* Price and Stock */}
+                  <div className="product-bottom">
+                    <span className="product-price">
+                      ${product.price.toFixed(2)}
+                    </span>
+                    
+                    <span className={`product-stock ${product.countInStock > 0 ? "in-stock" : "out-of-stock"}`}>
+                      {product.countInStock > 0 ? `In Stock: ${product.countInStock}` : "Out of Stock"}
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
-      )}
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Right Arrow */}
+      <button 
+        className="carousel-arrow carousel-next" 
+        onClick={goToNext}
+        disabled={currentIndex >= maxIndex || products.length === 0}
+      >
+        &#8250;
+      </button>
     </div>
   );
 }

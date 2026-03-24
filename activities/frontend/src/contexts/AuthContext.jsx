@@ -24,6 +24,8 @@ export const AuthProvider = ({children}) => {
             email: credentials.email,
         };
         setUser(userData);
+        // Notify other components (like CartContext) that auth changed
+        window.dispatchEvent(new Event("auth-change"));
         return data;
     };
 
@@ -35,6 +37,15 @@ export const AuthProvider = ({children}) => {
     const logout = async () => {
         await authService.logout();
         setUser(null);
+        // Notify other components (like CartContext) that auth changed
+        window.dispatchEvent(new Event("auth-change"));
+    };
+
+    const updateProfile = async (userData) => {
+        const data = await authService.updateProfile(userData);
+        // Update local state with new user data
+        setUser(data.user);
+        return data;
     };
 
     const value = {
@@ -42,6 +53,7 @@ export const AuthProvider = ({children}) => {
         login,
         register,
         logout,
+        updateProfile,
         loading,
         isAuthenticated: !!user,
     };

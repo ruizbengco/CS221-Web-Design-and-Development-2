@@ -1,8 +1,7 @@
 /* ── Features Section (Now Products Page) ── */
 
 .features-section {
-  background-color: var(--background-white);
-
+  background-color: rgba(255, 255, 255, 0.95);
   flex: 1;
 }
 
@@ -21,13 +20,13 @@
 
   font-weight: 700;
 
-  color: var(--text-dark);
+  color: var(--theme-text);
 
   margin: 0 0 0.75rem;
 }
 
 .features-subtitle {
-  color: var(--text-light);
+  color: var(--theme-muted);
 
   font-size: 1.1rem;
 

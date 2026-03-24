@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-import FeaturedProducts from "../products/FeaturedProducts";
 import "./Hero.css";
 
 export default function Hero() {
@@ -23,16 +22,11 @@ export default function Hero() {
             <Link to={getStartedLink} className="cta-btn cta-primary">
               Get Started
             </Link>
-            <Link to="/inventory" className="cta-btn cta-outline">
-              View Inventory
+            <Link to="/products" className="cta-btn cta-outline">
+              View Products
             </Link>
           </div>
         </div>
-      </section>
-      
-      {/* Featured Products Section */}
-      <section className="hero-featured">
-        <FeaturedProducts />
       </section>
     </div>
   );

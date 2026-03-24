@@ -1,8 +1,7 @@
 /* My Products Page Styles */
 .my-products-page {
   padding: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
+  width: 100%;
 }
 
 .my-products-page .page-header {
@@ -14,11 +13,11 @@
 
 .my-products-page .page-header h1 {
   margin: 0;
-  color: #333;
+  color: var(--theme-text);
 }
 
 .my-products-page .btn-list-product {
-  background-color: #27ae60;
+  background-color: var(--theme-success);
   color: white;
   padding: 12px 24px;
   border-radius: 5px;
@@ -28,7 +27,7 @@
 }
 
 .my-products-page .btn-list-product:hover {
-  background-color: #219a52;
+  background-color: var(--hover-green);
 }
 
 .message {
@@ -39,33 +38,33 @@
 }
 
 .message.error {
-  background-color: #fee;
-  color: #c00;
-  border: 1px solid #c00;
+  background-color: rgba(239, 68, 68, 0.1);
+  color: var(--theme-danger);
+  border: 1px solid var(--theme-danger);
 }
 
 .message.success {
-  background-color: #efe;
-  color: #060;
-  border: 1px solid #060;
+  background-color: rgba(39, 174, 96, 0.1);
+  color: var(--theme-success);
+  border: 1px solid var(--theme-success);
 }
 
 .empty-state {
   text-align: center;
   padding: 40px;
-  background-color: #f9f9f9;
+  background-color: var(--theme-card-bg);
   border-radius: 10px;
 }
 
 .empty-state p {
   font-size: 1.2rem;
-  color: #666;
+  color: var(--theme-muted);
   margin-bottom: 20px;
 }
 
 .btn-link {
   display: inline-block;
-  background-color: #3498db;
+  background-color: var(--primary-blue);
   color: white;
   padding: 10px 20px;
   border-radius: 5px;
@@ -73,7 +72,7 @@
 }
 
 .btn-link:hover {
-  background-color: #2980b9;
+  background-color: var(--hover-blue);
 }
 
 .products-list {
@@ -84,23 +83,26 @@
 
 .product-item {
   display: flex;
-  align-items: center;
+  background-color: var(--theme-card-bg);
+  border: 1px solid var(--theme-border);
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   gap: 20px;
-  padding: 15px;
 }
 
 .product-item.inactive {
   opacity: 0.7;
-  background-color: #f5f5f5;
+  background-color: var(--theme-border);
 }
 
 .product-item .product-image {
-  width: 100px;
-  height: 100px;
   flex-shrink: 0;
+  width: 140px;
+  height: 100px;
   border-radius: 8px;
   overflow: hidden;
-  background-color: #eee;
+  background-color: var(--theme-border);
 }
 
 .product-item .product-image img {
@@ -115,28 +117,38 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #888;
+  color: var(--theme-muted);
   font-size: 0.8rem;
 }
 
 .product-item .product-details {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
 }
 
+/* Product Name - Bold like featured products */
 .product-item .product-details h3 {
-  margin: 0 0 5px 0;
-}
-
-.product-item .product-category {
-  color: #666;
-  font-size: 0.9rem;
-  margin: 0 0 5px 0;
-}
-
-.product-item .product-price {
+  margin: 0 0 8px 0;
+  font-size: 1.1rem;
   font-weight: bold;
-  color: #2ecc71;
+  color: var(--theme-text);
+}
+
+/* Category - Blue like featured products */
+.product-item .product-category {
+  color: var(--primary-blue);
+  font-size: 0.8rem;
   margin: 0 0 5px 0;
+}
+
+/* Price - Bold green like featured products */
+.product-item .product-price {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--theme-success);
+  margin: 0;
 }
 
 .product-item .product-stock-row {
@@ -149,12 +161,13 @@
 .product-item .stock-label {
   font-size: 0.9rem;
   font-weight: bold;
+  color: var(--theme-text);
 }
 
 .product-item .stock-value {
   font-size: 1rem;
   font-weight: bold;
-  color: #2c3e50;
+  color: var(--theme-text);
 }
 
 .product-item .stock-edit {
@@ -166,13 +179,15 @@
 .product-item .stock-input {
   width: 80px;
   padding: 5px 10px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--theme-border);
   border-radius: 4px;
   font-size: 0.9rem;
+  background-color: var(--theme-bg);
+  color: var(--theme-text);
 }
 
 .product-item .btn-edit-stock {
-  background-color: #3498db;
+  background-color: var(--primary-blue);
   color: white;
   border: none;
   padding: 4px 10px;
@@ -183,11 +198,11 @@
 }
 
 .product-item .btn-edit-stock:hover {
-  background-color: #2980b9;
+  background-color: var(--hover-blue);
 }
 
 .product-item .btn-save {
-  background-color: #27ae60;
+  background-color: var(--theme-success);
   color: white;
   border: none;
   padding: 4px 10px;
@@ -197,11 +212,11 @@
 }
 
 .product-item .btn-save:hover {
-  background-color: #219a52;
+  background-color: var(--hover-green);
 }
 
 .product-item .btn-cancel {
-  background-color: #95a5a6;
+  background-color: var(--theme-muted);
   color: white;
   border: none;
   padding: 4px 10px;
@@ -211,7 +226,7 @@
 }
 
 .product-item .btn-cancel:hover {
-  background-color: #7f8c8d;
+  background-color: var(--theme-text);
 }
 
 .product-item .product-stock {
@@ -220,18 +235,18 @@
 }
 
 .status-active {
-  color: #27ae60;
+  color: var(--theme-success);
   font-weight: bold;
 }
 
 .status-inactive {
-  color: #e74c3c;
+  color: var(--theme-danger);
   font-weight: bold;
 }
 
 .product-actions {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 10px;
 }
 
@@ -242,31 +257,154 @@
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
-}
-
-.btn-activate {
-  background-color: #27ae60;
   color: white;
 }
 
+.btn-activate {
+  background-color: var(--theme-success);
+}
+
 .btn-activate:hover {
-  background-color: #219a52;
+  background-color: var(--hover-green);
 }
 
 .btn-inactive {
-  background-color: #f39c12;
+  background-color: var(--theme-warning);
   color: white;
 }
 
 .btn-inactive:hover {
-  background-color: #d68910;
+  background-color: var(--theme-warning);
+  opacity: 0.8;
 }
 
 .btn-delete {
-  background-color: #e74c3c;
+  background-color: var(--theme-danger);
   color: white;
 }
 
 .btn-delete:hover {
-  background-color: #c0392b;
+  background-color: var(--theme-danger);
+  opacity: 0.8;
+}
+
+.btn-feature {
+  background-color: var(--primary-blue);
+  color: white;
+}
+
+.btn-feature:hover {
+  background-color: var(--hover-blue);
+}
+
+.btn-unfeature {
+  background-color: var(--theme-muted);
+  color: white;
+}
+
+.btn-unfeature:hover {
+  background-color: var(--theme-text);
+}
+
+/* Edit Stock Action Button in Actions */
+.btn-edit-stock-action {
+  background-color: var(--primary-blue);
+  color: white;
+}
+
+.btn-edit-stock-action:hover {
+  background-color: var(--hover-blue);
+}
+
+/* Stock Display in Details */
+.product-stock-display {
+  font-size: 0.9rem;
+  margin: 5px 0;
+  color: var(--theme-text);
+}
+
+.product-stock-display .stock-value {
+  font-weight: bold;
+}
+
+/* Stock Popup */
+.stock-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.stock-popup {
+  background-color: var(--theme-card-bg);
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  min-width: 320px;
+  text-align: center;
+}
+
+.stock-popup h3 {
+  margin: 0 0 10px 0;
+  color: var(--theme-text);
+}
+
+.stock-product-name {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--theme-text);
+  margin: 0 0 20px 0;
+}
+
+.stock-input-group {
+  margin-bottom: 20px;
+}
+
+.stock-input-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--theme-text);
+}
+
+.stock-popup-input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--theme-border);
+  border-radius: 5px;
+  font-size: 1rem;
+  background-color: var(--theme-bg);
+  color: var(--theme-text);
+  box-sizing: border-box;
+}
+
+.stock-popup-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.stock-popup-buttons .btn-cancel {
+  background-color: var(--theme-muted);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.stock-popup-buttons .btn-save {
+  background-color: var(--theme-success);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
 }

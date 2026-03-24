@@ -1,33 +1,30 @@
 /* ── Footer ── */
 
 .landing-footer {
-  background-color: var(--text-dark);
-
-  padding: 2.25rem 2rem;
-
+  background-color: var(--theme-header-footer);
+  padding: 2.25rem 0;
   text-align: center;
+  margin-top: auto;
+  flex-shrink: 0;
+  width: 100%;
+  border-top: 1px solid var(--theme-border);
 }
 
 .footer-content {
-  max-width: 1100px;
-
+  width: 100%;
+  max-width: 100%;
   margin: 0 auto;
 }
 
 .footer-brand {
   font-size: 1.2rem;
-
   font-weight: 700;
-
-  color: white;
-
+  color: var(--theme-text);
   margin: 0 0 0.4rem;
 }
 
 .footer-copy {
-  color: rgba(255, 255, 255, 0.5);
-
+  color: var(--theme-muted);
   font-size: 0.875rem;
-
   margin: 0;
 }

@@ -1,33 +1,32 @@
 /* Cart Page Styles */
 .cart-page {
   padding: 20px;
-  max-width: 1000px;
-  margin: 0 auto;
+  width: 100%;
 }
 
 .cart-page h1 {
   text-align: center;
   margin-bottom: 30px;
-  color: #333;
+  color: var(--theme-text);
 }
 
 /* Empty Cart */
 .cart-empty {
   text-align: center;
   padding: 60px 20px;
-  background-color: #f9f9f9;
+  background-color: var(--theme-card-bg);
   border-radius: 10px;
 }
 
 .cart-empty p {
   font-size: 1.2rem;
-  color: #666;
+  color: var(--theme-muted);
   margin-bottom: 20px;
 }
 
 .btn-continue-shopping {
   display: inline-block;
-  background-color: #3498db;
+  background-color: var(--primary-blue);
   color: white;
   padding: 12px 24px;
   border-radius: 5px;
@@ -36,7 +35,7 @@
 }
 
 .btn-continue-shopping:hover {
-  background-color: #2980b9;
+  background-color: var(--hover-blue);
 }
 
 /* Cart Items */
@@ -52,8 +51,8 @@
   align-items: center;
   gap: 20px;
   padding: 15px;
-  background-color: white;
-  border: 1px solid #ddd;
+  background-color: var(--theme-card-bg);
+  border: 1px solid var(--theme-border);
   border-radius: 8px;
 }
 
@@ -63,7 +62,7 @@
   flex-shrink: 0;
   border-radius: 6px;
   overflow: hidden;
-  background-color: #f0f0f0;
+  background-color: var(--theme-border);
 }
 
 .cart-item-image img {
@@ -79,7 +78,7 @@
   align-items: center;
   justify-content: center;
   font-size: 0.7rem;
-  color: #888;
+  color: var(--theme-muted);
 }
 
 .cart-item-details {
@@ -89,16 +88,17 @@
 .cart-item-details h3 {
   margin: 0 0 5px 0;
   font-size: 1.1rem;
+  color: var(--theme-text);
 }
 
 .cart-item-price {
-  color: #2ecc71;
+  color: var(--theme-success);
   font-weight: bold;
   margin: 0 0 5px 0;
 }
 
 .cart-item-seller {
-  color: #888;
+  color: var(--theme-muted);
   font-size: 0.8rem;
   font-style: italic;
   margin: 0;
@@ -114,18 +114,19 @@
 .qty-btn {
   width: 30px;
   height: 30px;
-  border: 1px solid #ddd;
-  background-color: #f9f9f9;
+  border: 1px solid var(--theme-border);
+  background-color: var(--theme-card-bg);
   border-radius: 4px;
   cursor: pointer;
   font-size: 1.2rem;
   display: flex;
   align-items: center;
   justify-content: center;
+  color: var(--theme-text);
 }
 
 .qty-btn:hover {
-  background-color: #e9e9e9;
+  background-color: var(--theme-border);
 }
 
 .qty-value {
@@ -133,6 +134,7 @@
   font-weight: bold;
   min-width: 30px;
   text-align: center;
+  color: var(--theme-text);
 }
 
 /* Subtotal */
@@ -144,18 +146,18 @@
 .cart-item-subtotal p {
   margin: 0;
   font-size: 0.9rem;
-  color: #666;
+  color: var(--theme-muted);
 }
 
 .subtotal-value {
   font-size: 1.1rem;
   font-weight: bold;
-  color: #333 !important;
+  color: var(--theme-text) !important;
 }
 
 /* Remove Button */
 .btn-remove {
-  background-color: #e74c3c;
+  background-color: var(--theme-danger);
   color: white;
   border: none;
   padding: 8px 16px;
@@ -165,12 +167,13 @@
 }
 
 .btn-remove:hover {
-  background-color: #c0392b;
+  background-color: var(--theme-danger);
+  opacity: 0.8;
 }
 
 /* Cart Summary */
 .cart-summary {
-  background-color: #f9f9f9;
+  background-color: var(--theme-card-bg);
   padding: 20px;
   border-radius: 10px;
 }
@@ -180,10 +183,11 @@
   justify-content: space-between;
   padding: 10px 0;
   font-size: 1.1rem;
+  color: var(--theme-text);
 }
 
 .summary-row.total {
-  border-top: 2px solid #ddd;
+  border-top: 2px solid var(--theme-border);
   margin-top: 10px;
   padding-top: 15px;
   font-size: 1.3rem;
@@ -199,7 +203,7 @@
 }
 
 .btn-checkout {
-  background-color: #27ae60;
+  background-color: var(--theme-success);
   color: white;
   border: none;
   padding: 12px 30px;
@@ -212,5 +216,23 @@
 }
 
 .btn-checkout:hover {
-  background-color: #219a52;
+  background-color: var(--hover-green);
+}
+
+.btn-checkout-link {
+  display: block;
+  background-color: var(--theme-success);
+  color: white;
+  text-align: center;
+  padding: 12px 30px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: background-color 0.3s;
+  flex: 1;
+}
+
+.btn-checkout-link:hover {
+  background-color: var(--hover-green);
 }

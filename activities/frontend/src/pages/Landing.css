@@ -1,0 +1,18 @@
+/* Landing Page Styles */
+.landing-page {
+  min-height: 100vh;
+}
+
+/* Hero Section - Gradient */
+.landing-page .hero {
+  background: linear-gradient(
+    135deg,
+    var(--theme-gradient-start) 0%,
+    var(--theme-gradient-end) 100%
+  );
+}
+
+/* Features/Carousel Section */
+.landing-page .features-section {
+  background-color: var(--theme-bg);
+}

@@ -36,10 +36,11 @@ export const authService = {
       }
 
       // Save token and user to localStorage
-      // Backend returns { _id, username, token } - create user object
+      // Backend returns { _id, username, email, token } - create user object
       const userData = {
         _id: data._id,
         username: data.username,
+        email: data.email,
       };
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(userData));
@@ -88,5 +89,50 @@ export const authService = {
 
   isAuthenticated() {
     return !!this.getToken();
+  },
+
+  async updateProfile(userData) {
+    const token = localStorage.getItem("token");
+
+    const response = await fetch(`${API_URL}/profile`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(userData),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || "Failed to update profile.");
+    }
+
+    // Update localStorage with new user data
+    localStorage.setItem("user", JSON.stringify(data.user));
+
+    return data;
+  },
+
+  async changePassword(passwordData) {
+    const token = localStorage.getItem("token");
+
+    const response = await fetch(`${API_URL}/password`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(passwordData),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || "Failed to change password.");
+    }
+
+    return data;
   },
 };
