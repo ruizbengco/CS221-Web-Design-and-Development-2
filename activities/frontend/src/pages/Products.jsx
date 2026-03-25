@@ -291,22 +291,18 @@ const Products = () => {
                     </div>
                   </div>
                   <div className="product-card-right">
-                    <div className="product-main-info">
-                      <h3 className="product-name">{product.name}</h3>
-                      <p className="product-description">
-                        {product.description?.substring(0, 150)}
-                        {product.description?.length > 150 ? "..." : ""}
-                      </p>
+                    <h3 className="product-name">{product.name}</h3>
+                    <div className="product-seller-info">
+                      <span className="product-category">{product.category}</span>
+                      <span className="product-seller"> | {product.user?.username || "Unknown"}</span>
                     </div>
-                    <div className="product-meta">
-                      <p className="product-category">{product.category}</p>
-                      <p className="product-seller">Sold by: {product.user?.username || "Unknown"}</p>
-                      <p className="product-price">${product.price?.toFixed(2)}</p>
-                      <p className={`product-stock ${product.countInStock > 0 ? "in-stock" : "out-of-stock"}`}>
+                    <div className="product-price-stock">
+                      <span className="product-price">${product.price?.toFixed(2)}</span>
+                      <span className={`product-stock ${product.countInStock > 0 ? "in-stock" : "out-of-stock"}`}>
                         {product.countInStock > 0 
-                          ? `In Stock: ${product.countInStock}` 
-                          : "Out of Stock"}
-                      </p>
+                          ? `${product.countInStock} in stock` 
+                          : "Out of stock"}
+                      </span>
                     </div>
                   </div>
                 </div>

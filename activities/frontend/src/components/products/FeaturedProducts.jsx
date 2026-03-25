@@ -83,45 +83,45 @@ function FeaturedProducts() {
               {/* "Featured" Badge */}
               <div className="featured-badge">Featured</div>
               
-              {/* Product Image */}
-              <div className="featured-image-container">
-                {product.image ? (
-                  <img 
-                    src={product.image} 
-                    alt={product.name} 
-                    className="featured-image" 
-                  />
-                ) : (
-                  <div className="featured-image-placeholder">
-                    No Image
+              <div className="featured-card-content">
+                {/* Product Image - Left side */}
+                <div className="featured-image-container">
+                  {product.image ? (
+                    <img 
+                      src={product.image} 
+                      alt={product.name} 
+                      className="featured-image" 
+                    />
+                  ) : (
+                    <div className="featured-image-placeholder">
+                      No Image
+                    </div>
+                  )}
+                </div>
+                
+                {/* Product Info - Right side */}
+                <div className="featured-info">
+                  {/* Product Name */}
+                  <h3 className="featured-name">{product.name}</h3>
+                  
+                  {/* Product Category and Seller */}
+                  <div className="featured-meta">
+                    <span className="featured-category">{product.category}</span>
+                    <span className="featured-seller"> | {product.user?.username || "Unknown"}</span>
                   </div>
-                )}
+                </div>
               </div>
               
-              {/* Product Info */}
-              <div className="featured-info">
-                {/* Product Name */}
-                <h3 className="featured-name">{product.name}</h3>
+              {/* Product Price and Stock - Below */}
+              <div className="featured-price-container">
+                <span className="featured-price">
+                  ${product.price.toFixed(2)}
+                </span>
                 
-                {/* Product Category */}
-                <span className="featured-category">{product.category}</span>
-                
-                {/* Product Description */}
-                <p className="featured-description">
-                  {product.description || "No description available."}
-                </p>
-                
-                {/* Product Price */}
-                <div className="featured-price-container">
-                  <span className="featured-price">
-                    ${product.price.toFixed(2)}
-                  </span>
-                  
-                  {/* Stock Status */}
-                  <span className={`featured-stock ${product.countInStock > 0 ? "in-stock" : "out-of-stock"}`}>
-                    {product.countInStock > 0 ? `${product.countInStock} in stock` : "Out of stock"}
-                  </span>
-                </div>
+                {/* Stock Status */}
+                <span className={`featured-stock ${product.countInStock > 0 ? "in-stock" : "out-of-stock"}`}>
+                  {product.countInStock > 0 ? `${product.countInStock} in stock` : "Out of stock"}
+                </span>
               </div>
             </div>
           </Link>

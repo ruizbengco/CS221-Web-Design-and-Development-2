@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { productService } from "../services/productService";
+import { useNavigate } from "react-router-dom";
 import Card from "../components/Card";
 import Button from "../components/Button";
 import Input from "../components/Input";
@@ -21,6 +22,7 @@ const MyProducts = () => {
   const [stockValue, setStockValue] = useState("");
 
   const { loading: authLoading } = useAuth();
+  const navigate = useNavigate();
 
   // Fetch user's products when component mounts
   useEffect(() => {
@@ -141,6 +143,12 @@ const MyProducts = () => {
     setStockValue("");
   };
 
+  // Function to navigate to edit product page
+  const handleEditProduct = (product) => {
+    // Navigate to inventory page with product data in state
+    navigate("/inventory", { state: { product } });
+  };
+
   // Show loading while checking auth
   if (authLoading) {
     return <div>Loading...</div>;
@@ -181,28 +189,34 @@ const MyProducts = () => {
                 </div>
               </div>
               <div className="product-card-right">
-                <div className="product-main-info">
-                  <h3 className="product-name">{product.name}</h3>
-                  <p className="product-description">
-                    {product.description?.substring(0, 100)}
-                    {product.description?.length > 100 ? "..." : ""}
-                  </p>
+                <h3 className="product-name">{product.name}</h3>
+                <div className="product-seller-info">
+                  <span className="product-category">{product.category}</span>
+                  <span className="product-status-label">
+                    {product.isActive ? " | Active" : " | Inactive"}
+                  </span>
                 </div>
-                <div className="product-meta">
-                  <p className="product-category">{product.category}</p>
-                  <p className="product-price">${product.price?.toFixed(2)}</p>
-                  <p className={`product-stock ${product.countInStock > 0 ? "in-stock" : "out-of-stock"}`}>
+                <p className="product-description">
+                  {product.description?.substring(0, 80)}
+                  {product.description?.length > 80 ? "..." : ""}
+                </p>
+                <div className="product-price-stock">
+                  <span className="product-price">${product.price?.toFixed(2)}</span>
+                  <span className={`product-stock ${product.countInStock > 0 ? "in-stock" : "out-of-stock"}`}>
                     {product.countInStock > 0 
-                      ? `In Stock: ${product.countInStock}` 
-                      : "Out of Stock"}
-                  </p>
-                  <p className={`product-status ${product.isActive ? "status-active" : "status-inactive"}`}>
-                    {product.isActive ? "Active" : "Inactive"}
-                  </p>
+                      ? `${product.countInStock} in stock` 
+                      : "Out of stock"}
+                  </span>
                 </div>
               </div>
             </div>
             <div className="product-actions">
+              <Button 
+                onClick={() => handleEditProduct(product)}
+                className="btn-edit-product"
+              >
+                Edit
+              </Button>
               <Button 
                 onClick={() => handleToggleFeatured(product)}
                 className={product.isFeatured ? "btn-unfeature" : "btn-feature"}
@@ -213,7 +227,7 @@ const MyProducts = () => {
                 onClick={() => handleEditStock(product)}
                 className="btn-edit-stock-action"
               >
-                Edit Stock ({product.countInStock})
+                Edit Stock
               </Button>
               <Button 
                 onClick={() => handleToggleActive(product)}

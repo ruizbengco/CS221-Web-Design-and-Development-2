@@ -5,22 +5,25 @@ import "./Inventory.css";
 import TextArea from "../components/TextArea";
 import slugify from "slugify";
 import { useAuth } from "../contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { productService } from "../services/productService";
 
 const Inventory = () => {
+  const location = useLocation();
+  const editProduct = location.state?.product || null;
+  
   const [formData, setFormData] = useState({
-    name: "",
-    slug: "",
-    description: "",
-    price: 0,
-    image: "",
-    category: "",
-    countInStock: 0,
+    name: editProduct?.name || "",
+    slug: editProduct?.slug || "",
+    description: editProduct?.description || "",
+    price: editProduct?.price || 0,
+    image: editProduct?.image || "",
+    category: editProduct?.category || "",
+    countInStock: editProduct?.countInStock || 0,
   });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [slug, setSlug] = useState("");
+  const [slug, setSlug] = useState(editProduct?.slug || "");
 
   const { user, loading: authLoading } = useAuth();
   const navigate = useNavigate();
@@ -47,19 +50,24 @@ const Inventory = () => {
         image: formData.image,
         category: formData.category || "general",
         countInStock: parseInt(formData.countInStock, 10),
+        isActive: editProduct?.isActive ?? true,
       };
 
-      // Call the backend API to create the product
-      await productService.create(productData);
-
-      // Show success message
-      alert("Product created successfully!");
+      if (editProduct) {
+        // Update existing product
+        await productService.update(productData, editProduct._id);
+        alert("Product updated successfully!");
+      } else {
+        // Create new product
+        await productService.create(productData);
+        alert("Product created successfully!");
+      }
 
       // Redirect to My Products page
       navigate("/my-products");
     } catch (error) {
       setErrors({ error: error.message });
-      alert("Failed to create product: " + error.message);
+      alert("Failed to save product: " + error.message);
     } finally {
       setIsSubmitting(false);
     }
@@ -83,7 +91,7 @@ const Inventory = () => {
   return (
     <div className="inventory-page">
       <div className="inventory-card">
-        <h1 className="inventory-title">Create Product</h1>
+        <h1 className="inventory-title">{editProduct ? "Edit Product" : "Create Product"}</h1>
         <form onSubmit={handleSubmit} className="inventory-form">
           <div className="form-group">
             <Input
@@ -159,7 +167,7 @@ const Inventory = () => {
             />
           </div>
           <Button type="submit" loading={isSubmitting}>
-            Save Product
+            {editProduct ? "Update Product" : "Save Product"}
           </Button>
         </form>
       </div>
