@@ -16,6 +16,22 @@
   gap: 20px;
 }
 
+/* Product Card Link - Makes entire card clickable */
+.product-card-link {
+  text-decoration: none;
+  display: block;
+}
+
+.product-card-link .product-card {
+  height: 100%;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.product-card-link:hover .product-card {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
 /* Product Card - Horizontal Layout */
 .product-card {
   display: flex;
@@ -350,4 +366,157 @@
 
 .quantity-popup .btn-confirm:hover {
   background-color: var(--hover-green);
+}
+
+/* Filter Sidebar */
+.products-container {
+  display: flex;
+  gap: 30px;
+}
+
+.filter-sidebar {
+  width: 250px;
+  flex-shrink: 0;
+  background-color: var(--theme-card-bg);
+  padding: 20px;
+  border-radius: 10px;
+  height: fit-content;
+  position: sticky;
+  top: 20px;
+}
+
+.filter-section {
+  margin-bottom: 25px;
+}
+
+.filter-section h3 {
+  margin: 0 0 15px 0;
+  color: var(--theme-text);
+  font-size: 1.2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.filter-section h4 {
+  margin: 0 0 12px 0;
+  color: var(--theme-text);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.clear-filters-btn {
+  background-color: var(--theme-muted);
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: background-color 0.2s;
+}
+
+.clear-filters-btn:hover {
+  background-color: var(--theme-text);
+}
+
+/* Category Filters */
+.category-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.category-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  color: var(--theme-text);
+  font-size: 0.95rem;
+}
+
+.category-checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: var(--primary-blue);
+}
+
+.category-checkbox span {
+  transition: color 0.2s;
+}
+
+.category-checkbox:hover span {
+  color: var(--primary-blue);
+}
+
+.no-categories {
+  color: var(--theme-muted);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+/* Price Range Filters */
+.price-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.price-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.price-input-group label {
+  color: var(--theme-text);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.price-input-group input[type="range"] {
+  width: 100%;
+  cursor: pointer;
+  accent-color: var(--primary-blue);
+}
+
+.price-display {
+  text-align: center;
+  color: var(--theme-text);
+  font-weight: bold;
+  font-size: 1rem;
+  margin: 10px 0 0 0;
+  padding: 8px;
+  background-color: var(--theme-bg);
+  border-radius: 5px;
+}
+
+/* Products Main Area */
+.products-main {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Responsive - hide sidebar on mobile */
+@media (max-width: 768px) {
+  .products-container {
+    flex-direction: column;
+  }
+
+  .filter-sidebar {
+    width: 100%;
+    position: static;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .products-grid {
+    grid-template-columns: 1fr;
+  }
 }

@@ -1,5 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { productService } from "../../services/productService";
 import "./ProductList.css";
 
@@ -106,47 +107,51 @@ function ProductList() {
           /* Show current products */
           <div className="product-grid">
             {currentProducts.map((product) => (
-              <div key={product._id} className="product-card">
-                {/* Left side - Image */}
-                <div className="product-card-left">
-                  <div className="product-image-container">
-                    {product.image ? (
-                      <img 
-                        src={product.image} 
-                        alt={product.name} 
-                        className="product-image" 
-                      />
-                    ) : (
-                      <div className="product-image-placeholder">
-                        No Image
+              <Link to={`/product/${product._id}`} key={product._id} className="product-card-link">
+                <div className="product-card">
+                  <div className="product-card-inner">
+                    {/* Left side - Image */}
+                    <div className="product-card-left">
+                      <div className="product-image-container">
+                        {product.image ? (
+                          <img 
+                            src={product.image} 
+                            alt={product.name} 
+                            className="product-image" 
+                          />
+                        ) : (
+                          <div className="product-image-placeholder">
+                            No Image
+                          </div>
+                        )}
                       </div>
-                    )}
-                  </div>
-                </div>
-                
-                {/* Right side - Info */}
-                <div className="product-card-right">
-                  {/* Product Name */}
-                  <h3 className="product-name">{product.name}</h3>
-                  
-                  {/* Category and Seller */}
-                  <div className="product-meta">
-                    <span className="product-category">{product.category}</span>
-                    <span className="product-seller">Sold by: {product.user?.username || "Unknown"}</span>
-                  </div>
-                  
-                  {/* Price and Stock */}
-                  <div className="product-bottom">
-                    <span className="product-price">
-                      ${product.price.toFixed(2)}
-                    </span>
+                    </div>
                     
-                    <span className={`product-stock ${product.countInStock > 0 ? "in-stock" : "out-of-stock"}`}>
-                      {product.countInStock > 0 ? `In Stock: ${product.countInStock}` : "Out of Stock"}
-                    </span>
+                    {/* Right side - Info */}
+                    <div className="product-card-right">
+                      {/* Product Name */}
+                      <h3 className="product-name">{product.name}</h3>
+                      
+                      {/* Category and Seller */}
+                      <div className="product-meta">
+                        <span className="product-category">{product.category}</span>
+                        <span className="product-seller">Sold by: {product.user?.username || "Unknown"}</span>
+                      </div>
+                      
+                      {/* Price and Stock */}
+                      <div className="product-bottom">
+                        <span className="product-price">
+                          ${product.price.toFixed(2)}
+                        </span>
+                        
+                        <span className={`product-stock ${product.countInStock > 0 ? "in-stock" : "out-of-stock"}`}>
+                          {product.countInStock > 0 ? `In Stock: ${product.countInStock}` : "Out of Stock"}
+                        </span>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         )}

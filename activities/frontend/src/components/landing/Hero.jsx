@@ -7,14 +7,14 @@ export default function Hero() {
   // Get authentication status
   const { isAuthenticated } = useAuth();
 
-  // If logged in, go to products page; if not, go to login
-  const getStartedLink = isAuthenticated ? "/products" : "/login";
+  // If logged in, go to inventory (list new product); if not, go to login
+  const getStartedLink = isAuthenticated ? "/inventory" : "/login";
 
   return (
     <div>
       <section className="hero">
         <div className="hero-content">
-          <h1 className="hero-title">Welcome to My App</h1>
+          <h1 className="hero-title">Welcome to Buy n' Sell</h1>
           <p className="hero-subtitle">
             Discover the best products at unbeatable prices.
           </p>

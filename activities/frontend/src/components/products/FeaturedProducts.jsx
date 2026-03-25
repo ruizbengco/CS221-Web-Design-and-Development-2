@@ -1,5 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { productService } from "../../services/productService";
 import "./FeaturedProducts.css";
 
@@ -77,51 +78,53 @@ function FeaturedProducts() {
       {/* Featured Products Grid */}
       <div className="featured-grid">
         {products.map((product) => (
-          <div key={product._id} className="featured-card">
-            {/* "Featured" Badge */}
-            <div className="featured-badge">Featured</div>
-            
-            {/* Product Image */}
-            <div className="featured-image-container">
-              {product.image ? (
-                <img 
-                  src={product.image} 
-                  alt={product.name} 
-                  className="featured-image" 
-                />
-              ) : (
-                <div className="featured-image-placeholder">
-                  No Image
-                </div>
-              )}
-            </div>
-            
-            {/* Product Info */}
-            <div className="featured-info">
-              {/* Product Name */}
-              <h3 className="featured-name">{product.name}</h3>
+          <Link to={`/product/${product._id}`} key={product._id} className="featured-card-link">
+            <div className="featured-card">
+              {/* "Featured" Badge */}
+              <div className="featured-badge">Featured</div>
               
-              {/* Product Category */}
-              <span className="featured-category">{product.category}</span>
+              {/* Product Image */}
+              <div className="featured-image-container">
+                {product.image ? (
+                  <img 
+                    src={product.image} 
+                    alt={product.name} 
+                    className="featured-image" 
+                  />
+                ) : (
+                  <div className="featured-image-placeholder">
+                    No Image
+                  </div>
+                )}
+              </div>
               
-              {/* Product Description */}
-              <p className="featured-description">
-                {product.description || "No description available."}
-              </p>
-              
-              {/* Product Price */}
-              <div className="featured-price-container">
-                <span className="featured-price">
-                  ${product.price.toFixed(2)}
-                </span>
+              {/* Product Info */}
+              <div className="featured-info">
+                {/* Product Name */}
+                <h3 className="featured-name">{product.name}</h3>
                 
-                {/* Stock Status */}
-                <span className={`featured-stock ${product.countInStock > 0 ? "in-stock" : "out-of-stock"}`}>
-                  {product.countInStock > 0 ? `${product.countInStock} in stock` : "Out of stock"}
-                </span>
+                {/* Product Category */}
+                <span className="featured-category">{product.category}</span>
+                
+                {/* Product Description */}
+                <p className="featured-description">
+                  {product.description || "No description available."}
+                </p>
+                
+                {/* Product Price */}
+                <div className="featured-price-container">
+                  <span className="featured-price">
+                    ${product.price.toFixed(2)}
+                  </span>
+                  
+                  {/* Stock Status */}
+                  <span className={`featured-stock ${product.countInStock > 0 ? "in-stock" : "out-of-stock"}`}>
+                    {product.countInStock > 0 ? `${product.countInStock} in stock` : "Out of stock"}
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

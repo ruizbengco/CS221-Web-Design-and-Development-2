@@ -170,28 +170,37 @@ const MyProducts = () => {
       <div className="products-list">
         {products.map((product) => (
           <Card key={product._id} className={`product-item ${product.isActive ? "active" : "inactive"}`}>
-            <div className="product-image">
-              {product.image ? (
-                <img src={product.image} alt={product.name} />
-              ) : (
-                <div className="no-image">No Image</div>
-              )}
-            </div>
-            <div className="product-details">
-              <h3>{product.name}</h3>
-              <p className="product-category">{product.category}</p>
-              <p className="product-price">${product.price?.toFixed(2)}</p>
-              
-              {/* Stock display */}
-              <p className="product-stock-display">
-                Stock: <span className="stock-value">{product.countInStock}</span>
-              </p>
-              
-              <p className="product-status">
-                Status: <span className={product.isActive ? "status-active" : "status-inactive"}>
-                  {product.isActive ? "Active" : "Inactive"}
-                </span>
-              </p>
+            <div className="product-card">
+              <div className="product-card-left">
+                <div className="product-image">
+                  {product.image ? (
+                    <img src={product.image} alt={product.name} />
+                  ) : (
+                    <div className="no-image">No Image</div>
+                  )}
+                </div>
+              </div>
+              <div className="product-card-right">
+                <div className="product-main-info">
+                  <h3 className="product-name">{product.name}</h3>
+                  <p className="product-description">
+                    {product.description?.substring(0, 100)}
+                    {product.description?.length > 100 ? "..." : ""}
+                  </p>
+                </div>
+                <div className="product-meta">
+                  <p className="product-category">{product.category}</p>
+                  <p className="product-price">${product.price?.toFixed(2)}</p>
+                  <p className={`product-stock ${product.countInStock > 0 ? "in-stock" : "out-of-stock"}`}>
+                    {product.countInStock > 0 
+                      ? `In Stock: ${product.countInStock}` 
+                      : "Out of Stock"}
+                  </p>
+                  <p className={`product-status ${product.isActive ? "status-active" : "status-inactive"}`}>
+                    {product.isActive ? "Active" : "Inactive"}
+                  </p>
+                </div>
+              </div>
             </div>
             <div className="product-actions">
               <Button 

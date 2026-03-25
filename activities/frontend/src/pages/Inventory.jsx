@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
-import Card from "../components/Card";
 import Input from "../components/Input";
 import Button from "../components/Button";
-import "./Login.css";
+import "./Inventory.css";
 import TextArea from "../components/TextArea";
 import slugify from "slugify";
 import { useAuth } from "../contexts/AuthContext";
@@ -82,75 +81,89 @@ const Inventory = () => {
   }, [user, authLoading, navigate]);
 
   return (
-    <Card title="Create Product">
-      <form onSubmit={handleSubmit} className="login-form">
-        <Input
-          label="Name"
-          type="text"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-          error={errors.name}
-          placeholder="Enter product name"
-          required
-        />
-        <Input
-          label="Slug"
-          type="text"
-          name="slug"
-          value={slug}
-          onChange={handleChange}
-          error={errors.slug}
-          disabled
-        />
-        <TextArea
-          label="Description"
-          name="description"
-          error={errors.description}
-          rows={10}
-          cols={40}
-        ></TextArea>
-        <Input
-          label="Price"
-          name="price"
-          type="number"
-          value={formData.price}
-          error={errors.price}
-          onChange={handleChange}
-          required
-        />
-        <Input
-          label="Image URL"
-          type="text"
-          name="image"
-          value={formData.image}
-          onChange={handleChange}
-          error={errors.image}
-          placeholder="https://example.com/image.jpg"
-        />
-        <Input
-          label="Category"
-          type="text"
-          name="category"
-          value={formData.category}
-          onChange={handleChange}
-          error={errors.category}
-          placeholder="e.g., Electronics, Food, Clothing"
-        />
-        <Input
-          label="Count In Stock"
-          name="countInStock"
-          type="number"
-          value={formData.countInStock}
-          error={errors.countInStock}
-          onChange={handleChange}
-          placeholder="Number of items available"
-        />
-        <Button type="submit" loading={isSubmitting}>
-          Save Product
-        </Button>
-      </form>
-    </Card>
+    <div className="inventory-page">
+      <div className="inventory-card">
+        <h1 className="inventory-title">Create Product</h1>
+        <form onSubmit={handleSubmit} className="inventory-form">
+          <div className="form-group">
+            <Input
+              label="Name"
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              error={errors.name}
+              placeholder="Enter product name"
+              required
+            />
+          </div>
+          <div className="form-group">
+            <TextArea
+              label="Description"
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              error={errors.description}
+              rows={6}
+            />
+          </div>
+          <div className="form-row">
+            <div className="form-group">
+              <Input
+                label="Price"
+                name="price"
+                type="number"
+                value={formData.price}
+                error={errors.price}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <Input
+                label="Count In Stock"
+                name="countInStock"
+                type="number"
+                value={formData.countInStock}
+                error={errors.countInStock}
+                onChange={handleChange}
+                placeholder="0"
+              />
+            </div>
+          </div>
+          <div className="form-group">
+            <Input
+              label="Image URL"
+              type="text"
+              name="image"
+              value={formData.image}
+              onChange={handleChange}
+              error={errors.image}
+              placeholder="https://example.com/image.jpg"
+            />
+            {formData.image && (
+              <div className="image-preview">
+                <img src={formData.image} alt="Preview" onError={(e) => e.target.style.display = 'none'} />
+              </div>
+            )}
+          </div>
+          <div className="form-group">
+            <Input
+              label="Category"
+              type="text"
+              name="category"
+              value={formData.category}
+              onChange={handleChange}
+              error={errors.category}
+              placeholder="e.g., Electronics, Food, Clothing"
+            />
+          </div>
+          <Button type="submit" loading={isSubmitting}>
+            Save Product
+          </Button>
+        </form>
+      </div>
+    </div>
   );
 };
 

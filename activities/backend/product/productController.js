@@ -1,6 +1,27 @@
 import Product from "./Product.js";
 import mongoose from "mongoose";
 
+// GET /api/product/:id - Get single product by ID
+export const getById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Invalid product ID." });
+    }
+
+    const product = await Product.findById(id).populate("user", "username _id");
+
+    if (!product) {
+      return res.status(404).json({ message: "Product not found." });
+    }
+
+    res.status(200).json({ product });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 // GET /api/product - List all active products
 // Query param: ?includeInactive=true (for admin use)
 export const getAll = async (req, res) => {

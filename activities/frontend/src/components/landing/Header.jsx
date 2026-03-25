@@ -59,7 +59,7 @@ export default function Header() {
       <header className="landing-header">
         <div className="header-container">
           <div className="logo">
-            <Link to="/">My App</Link>
+            <Link to="/">Buy n' Sell</Link>
           </div>
           
           {/* Search Form */}

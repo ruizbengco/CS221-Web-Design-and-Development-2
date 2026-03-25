@@ -6,6 +6,7 @@ import {
   getFeatured,
   toggleFeatured,
   getMyProducts,
+  getById,
 } from "./productController.js";
 import { protect, adminOnly } from "../middleware/authMiddleware.js";
 
@@ -19,6 +20,9 @@ router.get("/featured", getFeatured);
 
 // GET /api/product/my-products - Get products created by logged in user
 router.get("/my-products", protect, getMyProducts);
+
+// GET /api/product/:id - Get single product by ID (public)
+router.get("/:id", getById);
 
 // POST /api/product/create - Create a new product (protected)
 router.post("/create", protect, create);

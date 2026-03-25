@@ -76,19 +76,17 @@
 }
 
 .products-list {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
 }
 
 .product-item {
-  display: flex;
   background-color: var(--theme-card-bg);
   border: 1px solid var(--theme-border);
   border-radius: 10px;
   padding: 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  gap: 20px;
 }
 
 .product-item.inactive {
@@ -96,44 +94,117 @@
   background-color: var(--theme-border);
 }
 
-.product-item .product-image {
+/* Product Card - Horizontal Layout */
+.product-card {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+/* Left side - Image */
+.product-card-left {
   flex-shrink: 0;
-  width: 140px;
-  height: 100px;
+  width: 120px;
+}
+
+.product-card .product-image {
+  width: 120px;
+  height: 90px;
   border-radius: 8px;
   overflow: hidden;
   background-color: var(--theme-border);
 }
 
-.product-item .product-image img {
+.product-card .product-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.product-item .no-image {
+.product-card .no-image {
   width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--theme-muted);
-  font-size: 0.8rem;
+  font-size: 0.7rem;
 }
 
-.product-item .product-details {
+/* Right side - Info */
+.product-card-right {
   flex: 1;
   display: flex;
   flex-direction: column;
   min-width: 0;
 }
 
-/* Product Name - Bold like featured products */
-.product-item .product-details h3 {
-  margin: 0 0 8px 0;
-  font-size: 1.1rem;
+.product-main-info {
+  flex: 1;
+  text-align: left;
+}
+
+.product-card .product-name {
+  margin: 0 0 5px 0;
+  font-size: 1rem;
   font-weight: bold;
   color: var(--theme-text);
+}
+
+.product-card .product-description {
+  color: var(--theme-text);
+  opacity: 0.8;
+  font-size: 0.75rem;
+  margin: 0 0 8px 0;
+  line-height: 1.3;
+}
+
+.product-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+.product-card .product-category {
+  color: var(--theme-muted);
+  font-size: 0.7rem;
+  margin: 0;
+}
+
+.product-card .product-price {
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--theme-success);
+  margin: 0;
+}
+
+.product-card .product-stock {
+  font-size: 0.75rem;
+  margin: 0;
+}
+
+.product-card .product-stock.in-stock {
+  color: var(--theme-success);
+}
+
+.product-card .product-stock.out-of-stock {
+  color: var(--theme-danger);
+  font-weight: bold;
+}
+
+.product-card .product-status {
+  font-size: 0.75rem;
+  margin: 0;
+  font-weight: bold;
+}
+
+.product-card .product-status.status-active {
+  color: var(--theme-success);
+}
+
+.product-card .product-status.status-inactive {
+  color: var(--theme-danger);
 }
 
 /* Category - Blue like featured products */
@@ -246,18 +317,21 @@
 
 .product-actions {
   display: flex;
-  flex-direction: row;
-  gap: 10px;
+  gap: 8px;
+  padding-top: 12px;
+  border-top: 1px solid var(--theme-border);
 }
 
 .product-actions button {
-  padding: 8px 16px;
-  font-size: 0.9rem;
+  flex: 1;
+  padding: 8px 10px;
+  font-size: 0.75rem;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
   color: white;
+  font-weight: 500;
 }
 
 .btn-activate {
@@ -314,17 +388,6 @@
 
 .btn-edit-stock-action:hover {
   background-color: var(--hover-blue);
-}
-
-/* Stock Display in Details */
-.product-stock-display {
-  font-size: 0.9rem;
-  margin: 5px 0;
-  color: var(--theme-text);
-}
-
-.product-stock-display .stock-value {
-  font-weight: bold;
 }
 
 /* Stock Popup */
@@ -407,4 +470,40 @@
   border-radius: 5px;
   cursor: pointer;
   font-size: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .products-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .products-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .products-list {
+    grid-template-columns: 1fr;
+  }
+  
+  .product-card {
+    flex-direction: column;
+  }
+  
+  .product-card-left {
+    width: 100%;
+  }
+  
+  .product-card .product-image {
+    width: 100%;
+    height: 150px;
+  }
+  
+  .product-actions {
+    flex-direction: column;
+  }
 }

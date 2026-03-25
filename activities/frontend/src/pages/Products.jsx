@@ -19,6 +19,13 @@ const Products = () => {
   const [showQuantityPopup, setShowQuantityPopup] = useState(null);
   const [popupQuantity, setPopupQuantity] = useState(1);
 
+  // State for filter sidebar
+  const [categories, setCategories] = useState([]);
+  const [priceRange, setPriceRange] = useState([0, 1000]);
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(1000);
+
   // Get search params from URL
   const [searchParams] = useSearchParams();
   const searchQuery = searchParams.get("search") || "";
@@ -41,6 +48,20 @@ const Products = () => {
         const data = await productService.getAll();
         const activeProducts = (data.products || data).filter(p => p.isActive);
         setProducts(activeProducts);
+
+        // Extract unique categories from products
+        const uniqueCategories = [...new Set(activeProducts.map(p => p.category).filter(Boolean))];
+        setCategories(uniqueCategories);
+
+        // Calculate price range from products
+        if (activeProducts.length > 0) {
+          const prices = activeProducts.map(p => p.price);
+          const min = Math.floor(Math.min(...prices));
+          const max = Math.ceil(Math.max(...prices));
+          setMinPrice(min);
+          setMaxPrice(max);
+          setPriceRange([min, max]);
+        }
       } catch (err) {
         setError(err.message);
       } finally {
@@ -51,19 +72,34 @@ const Products = () => {
     fetchProducts();
   }, []);
 
-  // Filter products based on search query
+  // Filter products based on search query, category, and price
   const filteredProducts = useMemo(() => {
-    if (!searchQuery.trim()) {
-      return products;
+    let filtered = products;
+
+    // Filter by search query
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase().trim();
+      filtered = filtered.filter(product => 
+        product.name.toLowerCase().includes(query) ||
+        product.description?.toLowerCase().includes(query) ||
+        product.category?.toLowerCase().includes(query)
+      );
     }
 
-    const query = searchQuery.toLowerCase().trim();
-    return products.filter(product => 
-      product.name.toLowerCase().includes(query) ||
-      product.description?.toLowerCase().includes(query) ||
-      product.category?.toLowerCase().includes(query)
+    // Filter by selected categories
+    if (selectedCategories.length > 0) {
+      filtered = filtered.filter(product => 
+        selectedCategories.includes(product.category)
+      );
+    }
+
+    // Filter by price range
+    filtered = filtered.filter(product => 
+      product.price >= priceRange[0] && product.price <= priceRange[1]
     );
-  }, [products, searchQuery]);
+
+    return filtered;
+  }, [products, searchQuery, selectedCategories, priceRange]);
 
   // Show loading while checking auth
   if (authLoading) {
@@ -112,6 +148,39 @@ const Products = () => {
     navigate("/products");
   };
 
+  // Function to handle category checkbox change
+  const handleCategoryChange = (category) => {
+    setSelectedCategories(prev => {
+      if (prev.includes(category)) {
+        // Remove category if already selected
+        return prev.filter(c => c !== category);
+      } else {
+        // Add category if not selected
+        return [...prev, category];
+      }
+    });
+  };
+
+  // Function to handle price range change
+  const handlePriceChange = (event, index) => {
+    const value = parseInt(event.target.value);
+    setPriceRange(prev => {
+      const newRange = [...prev];
+      newRange[index] = value;
+      // Ensure min is always less than or equal to max
+      if (newRange[0] > newRange[1]) {
+        newRange[index === 0 ? 1 : 0] = value;
+      }
+      return newRange;
+    });
+  };
+
+  // Function to clear all filters
+  const clearFilters = () => {
+    setSelectedCategories([]);
+    setPriceRange([minPrice, maxPrice]);
+  };
+
   return (
     <div className="products-page">
       <h1>Our Products</h1>
@@ -120,73 +189,131 @@ const Products = () => {
       
       {error && <p className="error-message">Error: {error}</p>}
       {successMessage && <p className="success-message">{successMessage}</p>}
-      
-      {/* Search Results Info */}
-      {searchQuery && (
-        <div className="search-results-info">
-          <p>
-            Showing results for "{searchQuery}" ({filteredProducts.length} products found)
-          </p>
-          <button onClick={clearSearch} className="clear-search-btn">
-            Clear Search
-          </button>
-        </div>
-      )}
-      
-      {!loading && !error && filteredProducts.length === 0 && (
-        <div className="no-products">
-          {searchQuery ? (
-            <p>No products match your search. Try a different search term.</p>
-          ) : (
-            <p>No products available yet.</p>
-          )}
-        </div>
-      )}
-      
-      <div className="products-grid">
-        {filteredProducts.map((product) => (
-          <div key={product._id} className="product-card">
-            <div className="product-card-left">
-              <div className="product-image">
-                {product.image ? (
-                  <img src={product.image} alt={product.name} />
-                ) : (
-                  <div className="no-image">No Image</div>
-                )}
-              </div>
-            </div>
-            <div className="product-card-right">
-              <div className="product-main-info">
-                <h3 className="product-name">{product.name}</h3>
-                <p className="product-description">
-                  {product.description?.substring(0, 150)}
-                  {product.description?.length > 150 ? "..." : ""}
-                </p>
-              </div>
-              <div className="product-meta">
-                <p className="product-category">{product.category}</p>
-                <p className="product-seller">Sold by: {product.user?.username || "Unknown"}</p>
-                <p className="product-price">${product.price?.toFixed(2)}</p>
-                <p className={`product-stock ${product.countInStock > 0 ? "in-stock" : "out-of-stock"}`}>
-                  {product.countInStock > 0 
-                    ? `In Stock: ${product.countInStock}` 
-                    : "Out of Stock"}
-                </p>
-                <button 
-                  className={`add-to-cart-btn ${isProductOwner(product) ? "own-product" : ""}`}
-                  disabled={product.countInStock === 0 || isProductOwner(product)}
-                  onClick={() => handleAddToCartClick(product)}
-                >
-                  {isProductOwner(product) 
-                    ? "Your Product" 
-                    : product.countInStock > 0 
-                      ? "Add to Cart" 
-                      : "Out of Stock"}
-                </button>
-              </div>
-            </div>
+
+      {/* Filter Sidebar */}
+      <div className="products-container">
+        <aside className="filter-sidebar">
+          <div className="filter-section">
+            <h3>Filters</h3>
+            <button onClick={clearFilters} className="clear-filters-btn">
+              Clear All
+            </button>
           </div>
-        ))}
+
+          {/* Category Filter */}
+          <div className="filter-section">
+            <h4>Categories</h4>
+            {categories.length === 0 ? (
+              <p className="no-categories">No categories available</p>
+            ) : (
+              <div className="category-list">
+                {categories.map(category => (
+                  <label key={category} className="category-checkbox">
+                    <input
+                      type="checkbox"
+                      checked={selectedCategories.includes(category)}
+                      onChange={() => handleCategoryChange(category)}
+                    />
+                    <span>{category}</span>
+                  </label>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Price Range Filter */}
+          <div className="filter-section">
+            <h4>Price Range</h4>
+            <div className="price-inputs">
+              <div className="price-input-group">
+                <label>Min: ${priceRange[0]}</label>
+                <input
+                  type="range"
+                  min={minPrice}
+                  max={maxPrice}
+                  value={priceRange[0]}
+                  onChange={(e) => handlePriceChange(e, 0)}
+                />
+              </div>
+              <div className="price-input-group">
+                <label>Max: ${priceRange[1]}</label>
+                <input
+                  type="range"
+                  min={minPrice}
+                  max={maxPrice}
+                  value={priceRange[1]}
+                  onChange={(e) => handlePriceChange(e, 1)}
+                />
+              </div>
+            </div>
+            <p className="price-display">
+              ${priceRange[0]} - ${priceRange[1]}
+            </p>
+          </div>
+        </aside>
+
+        {/* Main Content Area */}
+        <div className="products-main">
+          {/* Search Results Info */}
+          {(searchQuery || selectedCategories.length > 0 || priceRange[0] > minPrice || priceRange[1] < maxPrice) && (
+            <div className="search-results-info">
+              <p>
+                Showing {filteredProducts.length} product{filteredProducts.length !== 1 ? "s" : ""}
+                {searchQuery && ` for "${searchQuery}"`}
+              </p>
+              <button onClick={clearSearch} className="clear-search-btn">
+                Clear Search
+              </button>
+            </div>
+          )}
+          
+          {!loading && !error && filteredProducts.length === 0 && (
+            <div className="no-products">
+              {searchQuery || selectedCategories.length > 0 ? (
+                <p>No products match your filters. Try adjusting your filters.</p>
+              ) : (
+                <p>No products available yet.</p>
+              )}
+            </div>
+          )}
+          
+          <div className="products-grid">
+            {filteredProducts.map((product) => (
+              <Link to={`/product/${product._id}`} key={product._id} className="product-card-link">
+                <div className="product-card">
+                  <div className="product-card-left">
+                    <div className="product-image">
+                      {product.image ? (
+                        <img src={product.image} alt={product.name} />
+                      ) : (
+                        <div className="no-image">No Image</div>
+                      )}
+                    </div>
+                  </div>
+                  <div className="product-card-right">
+                    <div className="product-main-info">
+                      <h3 className="product-name">{product.name}</h3>
+                      <p className="product-description">
+                        {product.description?.substring(0, 150)}
+                        {product.description?.length > 150 ? "..." : ""}
+                      </p>
+                    </div>
+                    <div className="product-meta">
+                      <p className="product-category">{product.category}</p>
+                      <p className="product-seller">Sold by: {product.user?.username || "Unknown"}</p>
+                      <p className="product-price">${product.price?.toFixed(2)}</p>
+                      <p className={`product-stock ${product.countInStock > 0 ? "in-stock" : "out-of-stock"}`}>
+                        {product.countInStock > 0 
+                          ? `In Stock: ${product.countInStock}` 
+                          : "Out of Stock"}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* Quantity Popup Modal */}

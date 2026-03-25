@@ -1,0 +1,168 @@
+/* Inventory / Create Product Page Styles */
+.inventory-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 30px 20px;
+}
+
+.inventory-card {
+  background-color: var(--theme-card-bg);
+  border-radius: 12px;
+  padding: 40px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.inventory-title {
+  margin: 0 0 30px 0;
+  color: var(--theme-text);
+  font-size: 1.8rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* Form Styles */
+.inventory-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* Input wrapper styling (from Input component) */
+.form-group .input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group .input-wrapper label {
+  color: var(--theme-text);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.form-group .input-wrapper input,
+.form-group .input-wrapper textarea {
+  padding: 12px 15px;
+  border: 1px solid var(--theme-border);
+  border-radius: 6px;
+  font-size: 1rem;
+  background-color: var(--theme-bg);
+  color: var(--theme-text);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-group .input-wrapper input:focus,
+.form-group .input-wrapper textarea:focus {
+  outline: none;
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 3px rgba(30, 144, 255, 0.1);
+}
+
+.form-group .input-wrapper input:disabled {
+  background-color: var(--theme-border);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.form-group .input-wrapper input::placeholder,
+.form-group .input-wrapper textarea::placeholder {
+  color: var(--theme-muted);
+}
+
+.form-group .input-wrapper .error-message {
+  color: var(--theme-danger);
+  font-size: 0.85rem;
+}
+
+/* TextArea specific */
+.form-group .input-wrapper textarea {
+  resize: vertical;
+  min-height: 120px;
+  font-family: inherit;
+}
+
+/* Image URL input */
+.form-group .input-wrapper input[type="text"] {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Image Preview */
+.image-preview {
+  margin-top: 12px;
+  border: 2px dashed var(--theme-border);
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  background-color: var(--theme-bg);
+}
+
+.image-preview img {
+  max-width: 100%;
+  max-height: 250px;
+  border-radius: 6px;
+  object-fit: contain;
+}
+
+/* Submit Button */
+.inventory-form button[type="submit"] {
+  background-color: var(--theme-success);
+  color: white;
+  border: none;
+  padding: 16px 32px;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+  margin-top: 10px;
+}
+
+.inventory-form button[type="submit"]:hover:not(:disabled) {
+  background-color: var(--hover-green);
+}
+
+.inventory-form button[type="submit"]:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.inventory-form button[type="submit"]:disabled {
+  background-color: var(--theme-muted);
+  cursor: not-allowed;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .inventory-page {
+    padding: 20px 15px;
+  }
+
+  .inventory-card {
+    padding: 25px 20px;
+  }
+
+  .inventory-title {
+    font-size: 1.5rem;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .inventory-form {
+    gap: 20px;
+  }
+}

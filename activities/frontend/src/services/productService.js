@@ -3,6 +3,28 @@ const API_URL = "http://localhost:3000/api/product";
 // Product Service for API calls
 // This service handles all product-related HTTP requests
 export const productService = {
+  // GET /api/product/:id - Get single product by ID
+  async getById(id) {
+    // Make a GET request to fetch a single product
+    const response = await fetch(`${API_URL}/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    // Parse the JSON response
+    const data = await response.json();
+
+    // If response is not OK, throw an error
+    if (!response.ok) {
+      throw new Error(data.message || "Failed to fetch product.");
+    }
+
+    // Return the product
+    return data;
+  },
+
   // GET /api/product - Get all active products
   async getAll() {
     // Make a GET request to fetch products
